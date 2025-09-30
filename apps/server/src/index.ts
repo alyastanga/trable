@@ -7,11 +7,7 @@ import indexRouter from "./routes";
 import { HOST, IS_DEVELOPMENT, PORT, SITE_URL } from "@/consts";
 
 const app = express();
-const server = app.listen(
-    PORT,
-    HOST,
-    onListen
-);
+const server = app.listen(PORT, HOST, onListen);
 
 app.use(morgan(IS_DEVELOPMENT ? "dev" : "combined"));
 app.use(
