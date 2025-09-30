@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "emitDeclarationOnly": true,
+        "declaration": true,
+
+        "outDir": "dist/types",
+
+        "noEmit": false,
+
+        "rootDir": "./src",
+        "composite": true,
+
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        },
+
+        "strict": true,
+        "allowJs": true,
+        "module": "preserve",
+        "moduleDetection": "force",
+        "moduleResolution": "bundler",
+        "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "target": "ESNext"
+    },
+    "include": ["src/*"],
+    "exclude": ["node_modules", "dist", "build"]
+}

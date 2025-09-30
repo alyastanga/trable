@@ -1,0 +1,65 @@
+{
+    "deno.enablePaths": ["supabase/functions"],
+    "deno.lint": true,
+    "deno.unstable": [
+        "bare-node-builtins",
+        "byonm",
+        "sloppy-imports",
+        "unsafe-proto",
+        "webgpu",
+        "broadcast-channel",
+        "worker-options",
+        "cron",
+        "kv",
+        "ffi",
+        "fs",
+        "http",
+        "net"
+    ],
+    "prettier.tabWidth": 4,
+    "prettier.useTabs": false,
+    "prettier.arrowParens": "always",
+    "prettier.proseWrap": "preserve",
+    "prettier.printWidth": 80,
+    "editor.formatOnSave": true,
+    "files.autoSave": "onFocusChange",
+    "editor.codeActionsOnSave": {
+        "source.removeUnusedImports": "always"
+    },
+    "editor.fontFamily": "'Maple Mono NF CN', 'JetBrains Mono', 'DroidSans Mono', monospace",
+    "editor.fontSize": 16,
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": [
+                    //following will be in italic (=FlottFlott)
+                    "comment",
+                    "entity.name.type.class", //class names
+                    "keyword", //import, export, return…
+                    "constant", //String, Number, Boolean…, this, super
+                    "storage.modifier", //static keyword
+                    "storage.type.class.js" //class keyword
+                ],
+                "settings": {
+                    "fontStyle": "italic"
+                }
+            },
+            {
+                "scope": [
+                    //following will be excluded from italics (VSCode has some defaults for italics)
+                    "invalid",
+                    "keyword.operator",
+                    "constant.numeric.css",
+                    "keyword.other.unit.px.css",
+                    "constant.numeric.decimal.js",
+                    "constant.numeric.json"
+                ],
+                "settings": {
+                    "fontStyle": ""
+                }
+            }
+        ]
+    },
+    "editor.allowVariableFonts": true,
+    "editor.fontLigatures": true
+}

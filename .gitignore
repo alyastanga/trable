@@ -1,0 +1,120 @@
+# ------------------------------
+# OS FILES
+# ------------------------------
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+*.pem
+*.swp
+
+# Linux
+*~
+.nfs*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# ------------------------------
+# NODE / JAVASCRIPT
+# ------------------------------
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+.pnpm-debug.log
+
+# Environment files
+.env
+.env.local
+.env.*.local
+.env.production
+.env.keys
+
+# Logs
+logs
+*.log
+*.log.*
+
+# ------------------------------
+# BUILD / OUTPUT
+# ------------------------------
+
+dist/
+build/
+coverage/
+.tmp/
+.cache/
+.expo/
+.expo-shared/
+
+# Metro bundler cache
+.expo/*
+.expo-shared/*
+.expo-dev/
+.expo-cache/
+.expo-packager-cache/
+.expo-loader-cache/
+
+# Expo web
+web-build/
+
+# React Native
+ios/build/
+android/build/
+android/app/build/
+*.keystore
+*.jks
+
+# TypeScript
+*.tsbuildinfo
+
+# ------------------------------
+# IDE / EDITOR
+# ------------------------------
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# JetBrains IDEs
+.idea/
+*.iml
+
+# Others
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ------------------------------
+# MISC
+# ------------------------------
+
+# Temporary
+tmp/
+temp/
+*.tmp
+
+# Coverage reports
+coverage/
+
+# Mac/Linux trash
+.Trash-*
