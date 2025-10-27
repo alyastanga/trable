@@ -1,0 +1,70 @@
+name: CI
+
+permissions:
+    contents: read
+
+on:
+    pull_request:
+        branches: [main]
+    push:
+        branches: ["*"]
+
+jobs:
+    format-check:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: pnpm/action-setup@v4
+              with:
+                version: 10.19.0
+            
+            - uses: actions/setup-node@v4
+              with:
+                node-version: 22
+                cache: pnpm
+            
+            - run: pnpm install
+
+            - name: Run Prettier Check
+              run: pnpm format:check
+    lint:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: pnpm/action-setup@v4
+              with:
+                version: 10.19.0
+            
+            - uses: actions/setup-node@v4
+              with:
+                node-version: 22
+                cache: pnpm
+            
+            - run: pnpm install
+
+            - name: Run Lint
+              run: pnpm lint
+    test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: pnpm/action-setup@v4
+              with:
+                version: 10.19.0
+            
+            - uses: actions/setup-node@v4
+              with:
+                node-version: 22
+                cache: pnpm
+            
+            - run: pnpm install
+
+            - name: Run Test
+              run: pnpm test
+    

@@ -73,9 +73,8 @@ coverage/
 web-build/
 
 # React Native
-ios/build/
-android/build/
-android/app/build/
+/ios
+/android
 *.keystore
 *.jks
 
@@ -116,5 +115,15 @@ temp/
 # Coverage reports
 coverage/
 
+.metro-health-check*
+
 # Mac/Linux trash
 .Trash-*
+
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision

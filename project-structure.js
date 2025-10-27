@@ -12,17 +12,25 @@ const mobileConfig = createIndependentModules({
         {
             name: "Features",
             pattern: "src/features/**",
-            allowImportsFrom: ["{family}/**", "{sharedImports}"],
+            allowImportsFrom: ["{family_3}/**", "{sharedImports}"],
             errorMessage:
                 "🔥 A feature may only import items from shared folders and its own family. Importing items from another feature is prohibited. 🔥"
+        },
+
+        {
+            name: "Persistence",
+            pattern: "src/lib/persistence.ts",
+            allowImportsFrom: ["src/features/**/db/**"],
+            errorMessage:
+                "The persistence file may only import from `src/features/**/db/**`"
         },
         {
             name: "Shared",
             pattern: [
                 "src/components/**",
                 "src/data/**",
+                "src/drizzle/**",
                 "src/hooks/**",
-                "src/store/**",
                 "src/lib/**",
                 "src/constants/**"
             ],
@@ -43,8 +51,8 @@ const mobileConfig = createIndependentModules({
         sharedImports: [
             "src/components/**",
             "src/data/**",
+            "src/drizzle/**",
             "src/hooks/**",
-            "src/store/**",
             "src/lib/**",
             "src/constants/**",
             "assets/**"
@@ -59,60 +67,4 @@ const mobileConfig = createIndependentModules({
     }
 });
 
-const serverConfig = createIndependentModules({
-    modules: [
-        {
-            name: "Routes",
-            pattern: "src/routes/**",
-            allowImportsFrom: ["src/controllers/**", "{sharedImports}"],
-            errorMessage:
-                "🔥 Routes should only import controllers and shared modules. They cannot import services or other routes. 🔥"
-        },
-        {
-            name: "Controllers",
-            pattern: "src/controllers/**",
-            allowImportsFrom: ["src/services/**", "{sharedImports}"],
-            errorMessage:
-                "🔥 Controllers may only import from services and shared modules. They cannot import other controllers directly. 🔥"
-        },
-        {
-            name: "Services",
-            pattern: "src/services/**",
-            allowImportsFrom: ["src/models/**", "{sharedImports}"],
-            errorMessage:
-                "🔥 Services may only import models and shared modules. Cross-service imports are prohibited. 🔥"
-        },
-        {
-            name: "Models",
-            pattern: "src/models/**",
-            allowImportsFrom: ["{sharedImports}"],
-            errorMessage:
-                "🔥 Models should only import shared modules. No upward dependencies allowed. 🔥"
-        },
-        {
-            name: "Middlewares",
-            pattern: "src/middlewares/**",
-            allowImportsFrom: ["{sharedImports}"],
-            errorMessage: "🔥 Middlewares may only import shared modules. 🔥"
-        },
-        {
-            name: "Unknown files",
-            pattern: [["src/**", "!src/*"]],
-            allowImportsFrom: [],
-            allowExternalImports: false,
-            errorMessage:
-                "🔥 This file does not belong to any defined module in serverConfig. 🔥"
-        }
-    ],
-    reusableImportPatterns: {
-        sharedImports: ["src/consts/**", "src/lib/**"]
-    },
-    pathAliases: {
-        baseUrl: ".",
-        paths: {
-            "@/*": ["src/*"]
-        }
-    }
-});
-
-module.exports = { mobileConfig, serverConfig };
+module.exports = { mobileConfig };
