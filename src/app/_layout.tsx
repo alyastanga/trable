@@ -14,7 +14,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedSafeAreaView } from "@/components/themed-view";
 import { AuthContextProvider } from "@/features/(auth)/AuthContext";
-import useAuth from "@/features/(auth)/use-auth.ts";
+import useAuth from "@/features/(auth)/use-auth";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 
 SplashScreen.preventAutoHideAsync();
