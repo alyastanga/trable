@@ -1,4 +1,5 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -8,6 +9,8 @@ import { Text } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
+import { db } from "@/drizzle/db";
+import migrations from "@/drizzle/migrations/migrations";
 import { AuthContextProvider } from "@/features/(auth)/AuthContext";
 import useAuth from "@/features/(auth)/use-auth";
 
@@ -16,7 +19,9 @@ import "./global.css";
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-    const [loaded, error] = useFonts({
+    const { success, error } = useMigrations(db, migrations);
+
+    const [loaded, fontError] = useFonts({
         Montserrat: require("@assets/fonts/Montserrat/Montserrat-VariableFont_wght.ttf"),
         MontserratItalic: require("@assets/fonts/Montserrat/Montserrat-Italic-VariableFont_wght.ttf"),
         ...FontAwesome.font
@@ -26,15 +31,19 @@ export default function RootLayout() {
         if (error) {
             throw error;
         }
-    }, [error]);
+
+        if (fontError) {
+            throw fontError;
+        }
+    }, [error, fontError]);
 
     useEffect(() => {
-        if (loaded) {
+        if (loaded && success) {
             SplashScreen.hideAsync();
         }
-    }, [loaded]);
+    }, [loaded, success]);
 
-    if (!loaded) {
+    if (!loaded || !success) {
         return null;
     }
 

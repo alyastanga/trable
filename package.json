@@ -16,7 +16,8 @@
         "lint:fix": "eslint --fix .",
         "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
         "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
-        "prepare": "husky"
+        "prepare": "husky",
+        "db:generate": "drizzle-kit generate --config=./drizzle.config.ts"
     },
     "dependencies": {
         "@expo/html-elements": "^0.12.5",
@@ -24,6 +25,8 @@
         "@gluestack-ui/core": "^3.0.10",
         "@gluestack-ui/utils": "^3.0.11",
         "@legendapp/motion": "^2.5.3",
+        "@paralleldrive/cuid2": "^3.0.4",
+        "babel-plugin-inline-import": "^3.0.0",
         "babel-plugin-module-resolver": "^5.0.2",
         "drizzle-orm": "^0.44.7",
         "expo": "~54.0.20",
