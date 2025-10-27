@@ -1,43 +1,118 @@
-import { StyleSheet, TextInput } from "react-native";
-import { View } from "react-native-reanimated/lib/typescript/Animated";
+import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { ThemedText } from "@/components/themed-text";
-import { ThemedSafeAreaView, ThemedView } from "@/components/themed-view";
+import { Button, ButtonText } from "@/components/ui/button";
+import {
+    FormControl,
+    FormControlError,
+    FormControlErrorIcon,
+    FormControlErrorText,
+    FormControlHelper,
+    FormControlHelperText,
+    FormControlLabel,
+    FormControlLabelText
+} from "@/components/ui/form-control";
+import { AlertCircleIcon } from "@/components/ui/icon";
+import { Input, InputField } from "@/components/ui/input";
+import { VStack } from "@/components/ui/vstack/index";
 import { useLoginStore } from "@/features/(auth)/login/store";
-import { useColorScheme } from "@/hooks/use-color-scheme";
 
 
 export default function SignInScreen() {
-    const colorScheme = useColorScheme();
     const email = useLoginStore((state) => state.email);
+    const emailError = useLoginStore((state) => state.emailError);
     const setEmail = useLoginStore((state) => state.setEmail);
     const password = useLoginStore((state) => state.password);
+    const passwordError = useLoginStore((state) => state.passwordError);
     const setPassword = useLoginStore((state) => state.setPassword);
+    const validate = useLoginStore((state) => state.validate);
+    const clearAll = useLoginStore((state) => state.clearAll);
+
+    function handleSubmit() {}
 
     return (
-        <ThemedSafeAreaView style={styles.mainContainer}>
-            <ThemedView style={styles.titleContainer}></ThemedView>
-            <ThemedView style={styles.form}>
-                <ThemedView style={styles.inputContainer}>
-                    <ThemedText>Email</ThemedText>
-                    <TextInput
-                        placeholder={"Enter your email"}
-                        value={email}
-                        onChangeText={setEmail}
-                        style={styles.textInput}
-                    />
-                </ThemedView>
-                <ThemedView style={styles.inputContainer}>
-                    <ThemedText>Password</ThemedText>
-                    <TextInput
-                        placeholder={"Password"}
-                        value={password}
-                        onChangeText={setPassword}
-                        style={styles.textInput}
-                    />
-                </ThemedView>
-            </ThemedView>
-        </ThemedSafeAreaView>
+        <SafeAreaView style={styles.mainContainer}>
+            <View style={styles.titleContainer}>
+                <View>
+                    <Text>TRABLE</Text>
+                </View>
+            </View>
+            <VStack space="sm">
+                <FormControl
+                    isInvalid={!!emailError}
+                    size="lg"
+                    isDisabled={false}
+                    isReadOnly={false}
+                    isRequired={true}
+                >
+                    <FormControlLabel>
+                        <FormControlLabelText>Email</FormControlLabelText>
+                    </FormControlLabel>
+                    <Input variant="outline" size="md" className="w-full">
+                        <InputField
+                            value={email}
+                            onChangeText={setEmail}
+                            placeholder="Enter your email..."
+                        />
+                    </Input>
+                    <FormControlHelper>
+                        <FormControlHelperText>
+                            Must be a valid email address
+                        </FormControlHelperText>
+                    </FormControlHelper>
+                    <FormControlError>
+                        <FormControlErrorIcon
+                            as={AlertCircleIcon}
+                            className="text-red-500"
+                        />
+                        <FormControlErrorText className="text-red-500">
+                            {emailError}
+                        </FormControlErrorText>
+                    </FormControlError>
+                </FormControl>
+                <FormControl
+                    isInvalid={!!passwordError}
+                    size="lg"
+                    isDisabled={false}
+                    isReadOnly={false}
+                    isRequired={true}
+                >
+                    <FormControlLabel>
+                        <FormControlLabelText>Password</FormControlLabelText>
+                    </FormControlLabel>
+                    <Input variant="outline" size="md" className="w-full">
+                        <InputField
+                            value={password}
+                            onChangeText={setPassword}
+                            placeholder="Enter your password..."
+                        />
+                    </Input>
+                    <FormControlHelper>
+                        <FormControlHelperText>
+                            Must contain alphanumeric, lowercase, uppercase,
+                            special characters and at least 8 characters long.
+                        </FormControlHelperText>
+                    </FormControlHelper>
+                    <FormControlError>
+                        <FormControlErrorIcon
+                            as={AlertCircleIcon}
+                            className="text-red-500"
+                        />
+                        <FormControlErrorText className="text-red-500">
+                            {emailError}
+                        </FormControlErrorText>
+                    </FormControlError>
+                </FormControl>
+                <Button
+                    className="w-full"
+                    size="md"
+                    variant="outline"
+                    onPress={handleSubmit}
+                >
+                    <ButtonText>Sign in</ButtonText>
+                </Button>
+            </VStack>
+        </SafeAreaView>
     );
 }
 
@@ -52,22 +127,9 @@ const styles = StyleSheet.create({
         position: "relative"
     },
     titleContainer: {
-        flex: 1
-    },
-    form: {
-        alignSelf: "flex-start",
-        gap: 24,
-        width: "100%"
-    },
-    inputContainer: {
-        gap: 4,
-        width: "100%"
-    },
-    textInput: {
-        borderWidth: 1,
-        borderColor: "black",
-        borderRadius: 12,
-        width: "100%",
-        padding: 16
+        flex: 1,
+
+        justifyContent: "center",
+        alignItems: "center"
     }
 });

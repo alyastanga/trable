@@ -1,20 +1,20 @@
-import { Drawer } from "expo-router/drawer";
+import { Stack } from "expo-router";
 
-export default function DrawerLayout() {
+export default function MainLayout() {
     return (
-        <Drawer initialRouteName="newsfeed">
-            <Drawer.Screen
+        <Stack initialRouteName="newsfeed">
+            <Stack.Screen
                 name="newsfeed"
                 options={{
                     headerShown: false
                 }}
             />
-            <Drawer.Screen
+            <Stack.Screen
                 name="profile"
                 options={{
                     headerShown: false
                 }}
             />
-        </Drawer>
+        </Stack>
     );
 }
