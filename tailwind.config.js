@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    darkMode: "class",
+    darkMode: process.env.DARK_MODE ? process.env.DARK_MODE : "media",
     content: [
         "./app/**/*.{html,js,jsx,ts,tsx,mdx}",
         "./components/**/*.{html,js,jsx,ts,tsx,mdx}",
@@ -181,6 +181,7 @@ module.exports = {
                 heading: undefined,
                 body: undefined,
                 mono: undefined,
+                montserrat: ["var(--font-montserrat)"],
                 jakarta: ["var(--font-plus-jakarta-sans)"],
                 roboto: ["var(--font-roboto)"],
                 code: ["var(--font-source-code-pro)"],

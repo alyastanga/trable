@@ -59,14 +59,14 @@ function RootLayoutContents() {
 
     if (error) {
         return (
-            <SafeAreaView>
-                <Text>{error.message}</Text>
+            <SafeAreaView className="bg-background-900 text-typography-0 dark:bg-background-0 dark:text-typography-900">
+                <Text className="text-inherit">{error.message}</Text>
             </SafeAreaView>
         );
     }
 
     return (
-        <Stack>
+        <Stack initialRouteName="(auth)">
             <Stack.Protected guard={user !== null}>
                 <Stack.Screen name="(main)" options={{ headerShown: false }} />
             </Stack.Protected>

@@ -2,30 +2,30 @@ import { z } from "zod";
 
 // --- Zod validators ---
 const emailSchema = z
-    .email({ error: "Enter a valid email address" })
-    .nonempty({ error: "Email is required" });
+    .email({ error: "Invalid email address" })
+    .nonempty({ error: "Email cannot be empty" });
 
-const passwordSchema = z
-    .string()
-    .nonempty({ error: "Password is required" })
-    .min(8, { error: "Password must be at least 8 characters long" })
-    .regex(/[a-z]/, { error: "Must contain at least one lowercase letter" })
-    .regex(/[A-Z]/, { error: "Must contain at least one uppercase letter" })
-    .regex(/\d/, { error: "Must contain at least one number" })
-    .regex(/[^A-Za-z0-9]/, {
-        error: "Must contain at least one special character"
-    });
+const passwordSchema = z.string().refine(
+    (str) => {
+        return !/^(.{0,7}|[^0-9]*|[^A-Z]*|[^a-z]*|[a-zA-Z0-9]*)$/.test(str);
+    },
+    {
+        error: "Password must be at least 8 characters long with one uppercase, lowercase, digit, and special character. "
+    }
+);
 
 const validateEmail = (email: string) => {
     const result = emailSchema.safeParse(email);
 
-    return result.success ? "" : result.error.message;
+    return result.success ? "" : z.treeifyError(result.error).errors.at(-1);
 };
 
 const validatePassword = (password: string) => {
     const result = passwordSchema.safeParse(password);
 
-    return result.success ? "" : result.error.message;
+    console.log(result);
+
+    return result.success ? "" : z.treeifyError(result.error).errors.at(-1);
 };
 
 export { emailSchema, passwordSchema, validateEmail, validatePassword };

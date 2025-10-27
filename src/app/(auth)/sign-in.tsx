@@ -16,6 +16,7 @@ import { AlertCircleIcon } from "@/components/ui/icon";
 import { Input, InputField } from "@/components/ui/input";
 import { VStack } from "@/components/ui/vstack/index";
 import { useLoginStore } from "@/features/(auth)/login/store";
+import useAuth from "@/features/(auth)/use-auth";
 
 export default function SignInScreen() {
     const email = useLoginStore((state) => state.email);
@@ -26,28 +27,39 @@ export default function SignInScreen() {
     const setPassword = useLoginStore((state) => state.setPassword);
     const validate = useLoginStore((state) => state.validate);
     const clearAll = useLoginStore((state) => state.clearAll);
+    const { isLoading, refetch } = useAuth();
 
-    function handleSubmit() {}
+    function handleSubmit() {
+        validate();
+
+        clearAll;
+    }
 
     return (
-        <SafeAreaView style={styles.mainContainer}>
-            <View style={styles.titleContainer}>
-                <View>
-                    <Text>TRABLE</Text>
-                </View>
+        <SafeAreaView className="flex-1 justify-center align-center p-6 bg-background-900 dark:bg-background-0">
+            <View className="flex-1 justify-center align-center">
+                <Text className="font-montserrat text-6xl font-bold text-typography-0 dark:text-typography-900 text-center">
+                    TRABLE
+                </Text>
             </View>
-            <VStack space="sm">
+            <VStack space="2xl">
                 <FormControl
                     isInvalid={!!emailError}
-                    size="lg"
+                    size="md"
                     isDisabled={false}
                     isReadOnly={false}
                     isRequired={true}
                 >
                     <FormControlLabel>
-                        <FormControlLabelText>Email</FormControlLabelText>
+                        <FormControlLabelText size="xl">
+                            Email
+                        </FormControlLabelText>
                     </FormControlLabel>
-                    <Input variant="outline" size="md" className="w-full">
+                    <Input
+                        variant="outline"
+                        size="lg"
+                        className="w-full rounded-xl"
+                    >
                         <InputField
                             value={email}
                             onChangeText={setEmail}
@@ -71,15 +83,21 @@ export default function SignInScreen() {
                 </FormControl>
                 <FormControl
                     isInvalid={!!passwordError}
-                    size="lg"
+                    size="sm"
                     isDisabled={false}
                     isReadOnly={false}
                     isRequired={true}
                 >
                     <FormControlLabel>
-                        <FormControlLabelText>Password</FormControlLabelText>
+                        <FormControlLabelText size="xl">
+                            Password
+                        </FormControlLabelText>
                     </FormControlLabel>
-                    <Input variant="outline" size="md" className="w-full">
+                    <Input
+                        variant="outline"
+                        size="lg"
+                        className="w-full rounded-xl"
+                    >
                         <InputField
                             value={password}
                             onChangeText={setPassword}
@@ -98,13 +116,13 @@ export default function SignInScreen() {
                             className="text-red-500"
                         />
                         <FormControlErrorText className="text-red-500">
-                            {emailError}
+                            {passwordError}
                         </FormControlErrorText>
                     </FormControlError>
                 </FormControl>
                 <Button
-                    className="w-full"
-                    size="md"
+                    className="w-full rounded-xl"
+                    size="lg"
                     variant="outline"
                     onPress={handleSubmit}
                 >
