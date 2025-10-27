@@ -1,6 +1,7 @@
 "use client";
 import { createProgress } from "@gluestack-ui/core/progress/creator";
-import { tva ,
+import {
+    tva,
     withStyleContext,
     useStyleContext
 } from "@gluestack-ui/utils/nativewind-utils";

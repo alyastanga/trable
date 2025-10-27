@@ -4,7 +4,7 @@ import { H4 } from "@expo/html-elements";
 import { createActionsheet } from "@gluestack-ui/core/actionsheet/creator";
 import { PrimitiveIcon, UIIcon } from "@gluestack-ui/core/icon/creator";
 import type { VariantProps } from "@gluestack-ui/utils/nativewind-utils";
-import { tva , withStyleContext } from "@gluestack-ui/utils/nativewind-utils";
+import { tva, withStyleContext } from "@gluestack-ui/utils/nativewind-utils";
 import {
     Motion,
     AnimatePresence,

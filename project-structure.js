@@ -5,7 +5,11 @@ const mobileConfig = createIndependentModules({
         {
             name: "App",
             pattern: "src/app/**",
-            allowImportsFrom: ["{sharedImports}", "src/features/**", "src/app/global.css"],
+            allowImportsFrom: [
+                "{sharedImports}",
+                "src/features/**",
+                "src/app/global.css"
+            ],
             errorMessage:
                 "🔥 The app module may only import items from shared folders and features. Importing items from other app files is prohibited. 🔥"
         },

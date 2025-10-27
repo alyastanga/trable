@@ -2,7 +2,8 @@
 import { H3 } from "@expo/html-elements";
 import { createAccordion } from "@gluestack-ui/core/accordion/creator";
 import { PrimitiveIcon, UIIcon } from "@gluestack-ui/core/icon/creator";
-import { tva ,
+import {
+    tva,
     withStyleContext,
     useStyleContext
 } from "@gluestack-ui/utils/nativewind-utils";

@@ -1,6 +1,7 @@
 "use client";
 import { createModal as createDrawer } from "@gluestack-ui/core/modal/creator";
-import { tva ,
+import {
+    tva,
     withStyleContext,
     useStyleContext
 } from "@gluestack-ui/utils/nativewind-utils";

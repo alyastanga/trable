@@ -17,7 +17,6 @@ import { Input, InputField } from "@/components/ui/input";
 import { VStack } from "@/components/ui/vstack/index";
 import { useLoginStore } from "@/features/(auth)/login/store";
 
-
 export default function SignInScreen() {
     const email = useLoginStore((state) => state.email);
     const emailError = useLoginStore((state) => state.emailError);

@@ -5,7 +5,8 @@ import {
     IPrimitiveIcon,
     UIIcon
 } from "@gluestack-ui/core/icon/creator";
-import { tva ,
+import {
+    tva,
     withStyleContext,
     useStyleContext
 } from "@gluestack-ui/utils/nativewind-utils";

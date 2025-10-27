@@ -1,6 +1,7 @@
 "use client";
 import { createAvatar } from "@gluestack-ui/core/avatar/creator";
-import { tva ,
+import {
+    tva,
     withStyleContext,
     useStyleContext
 } from "@gluestack-ui/utils/nativewind-utils";

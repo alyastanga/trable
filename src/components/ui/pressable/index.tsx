@@ -1,6 +1,6 @@
 "use client";
 import { createPressable } from "@gluestack-ui/core/pressable/creator";
-import { tva , withStyleContext } from "@gluestack-ui/utils/nativewind-utils";
+import { tva, withStyleContext } from "@gluestack-ui/utils/nativewind-utils";
 import type { VariantProps } from "@gluestack-ui/utils/nativewind-utils";
 import React from "react";
 import { Pressable as RNPressable } from "react-native";

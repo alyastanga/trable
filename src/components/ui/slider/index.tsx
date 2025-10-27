@@ -1,13 +1,14 @@
 "use client";
 import { createSlider } from "@gluestack-ui/core/slider/creator";
-import { tva ,
+import {
+    tva,
     withStyleContext,
     useStyleContext
 } from "@gluestack-ui/utils/nativewind-utils";
 import type { VariantProps } from "@gluestack-ui/utils/nativewind-utils";
 import { cssInterop } from "nativewind";
 import React from "react";
-import { View , Pressable } from "react-native";
+import { View, Pressable } from "react-native";
 
 const SCOPE = "SLIDER";
 const Root = withStyleContext(View, SCOPE);

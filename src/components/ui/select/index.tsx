@@ -2,7 +2,8 @@
 
 import { PrimitiveIcon, UIIcon } from "@gluestack-ui/core/icon/creator";
 import { createSelect } from "@gluestack-ui/core/select/creator";
-import { tva ,
+import {
+    tva,
     withStyleContext,
     useStyleContext
 } from "@gluestack-ui/utils/nativewind-utils";
@@ -25,7 +26,6 @@ import {
     ActionsheetSectionList,
     ActionsheetSectionHeaderText
 } from "./select-actionsheet";
-
 
 const SelectTriggerWrapper = React.forwardRef<
     React.ComponentRef<typeof Pressable>,

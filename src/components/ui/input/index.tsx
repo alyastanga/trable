@@ -1,7 +1,8 @@
 "use client";
 import { PrimitiveIcon, UIIcon } from "@gluestack-ui/core/icon/creator";
 import { createInput } from "@gluestack-ui/core/input/creator";
-import { tva ,
+import {
+    tva,
     withStyleContext,
     useStyleContext
 } from "@gluestack-ui/utils/nativewind-utils";

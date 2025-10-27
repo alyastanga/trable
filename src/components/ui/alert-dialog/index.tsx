@@ -1,6 +1,7 @@
 "use client";
 import { createAlertDialog } from "@gluestack-ui/core/alert-dialog/creator";
-import { tva ,
+import {
+    tva,
     withStyleContext,
     useStyleContext
 } from "@gluestack-ui/utils/nativewind-utils";
