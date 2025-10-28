@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -19,6 +20,7 @@ import { useLoginStore } from "@/features/(auth)/login/store";
 import useAuth from "@/features/(auth)/use-auth";
 
 export default function SignInScreen() {
+    const router = useRouter();
     const email = useLoginStore((state) => state.email);
     const emailError = useLoginStore((state) => state.emailError);
     const setEmail = useLoginStore((state) => state.setEmail);
@@ -31,8 +33,12 @@ export default function SignInScreen() {
 
     function handleSubmit() {
         validate();
+        refetch();
+        clearAll();
+    }
 
-        clearAll;
+    function handleRegister() {
+        router.push("/sign-up");
     }
 
     return (
@@ -127,6 +133,21 @@ export default function SignInScreen() {
                     onPress={handleSubmit}
                 >
                     <ButtonText>Sign in</ButtonText>
+                </Button>
+
+                <Text
+                    className="font-montserrat text-xs text-typography-0 dark:text-typography-900 text-center"
+                >
+                    ---------------------- OR ----------------------
+                </Text>
+
+                <Button
+                    className="w-full rounded-xl"
+                    size="lg"
+                    variant="outline"
+                    onPress={handleRegister}
+                >
+                    <ButtonText>Register</ButtonText>
                 </Button>
             </VStack>
         </SafeAreaView>

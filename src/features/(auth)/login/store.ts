@@ -1,4 +1,3 @@
-import z from "zod";
 import { create } from "zustand";
 
 import { validateEmail, validatePassword } from "../validations";
