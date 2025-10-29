@@ -1,0 +1,40 @@
+{
+    "name": "React Native Android Dev Environment",
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu", // Base Ubuntu image
+    "features": {
+      // Installs specified Java version
+      "ghcr.io/devcontainers/features/java:1": {
+        "version": "17" // Or "21", "11", etc., matching project needs
+        // "jdkDistro": "ms" // Optional: specify distribution
+      },
+      // Installs Node.js (LTS version)
+      "ghcr.io/devcontainers/features/node:1": {
+        "version": "lts"
+      }
+      // Add more features if needed (e.g., Docker, databases)
+    },
+    // Optional: Define minimum host machine requirements
+    "hostRequirements": {
+      "cpus": 4,
+      "memory": "16gb",
+      "storage": "32gb"
+    },
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          // Add useful VS Code extensions
+          "dbaeumer.vscode-eslint",
+          "esbenp.prettier-vscode",
+          "msjsdiag.vscode-react-native",
+          "eamodio.gitlens"
+        ]
+      }
+    },
+    // Command to run *after* the container is created and features are installed
+    // Runs the setup script and then installs project dependencies
+    "postCreateCommand":  "bash .devcontainer/setup.sh && npm install",
+    "remoteEnv": {
+      // Example: Define environment variables needed by your app/build
+      // "MY_API_KEY": "your-key-here" // Use Codespace Secrets for sensitive values
+    }
+}
