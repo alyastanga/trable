@@ -2,11 +2,13 @@ CREATE TABLE `accounts` (
 	`_account_id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`_user_id` integer,
 	`email` text NOT NULL,
+	`mobile_number` text NOT NULL,
 	`password_hash` text NOT NULL,
 	FOREIGN KEY (`_user_id`) REFERENCES `users`(`_user_id`) ON UPDATE cascade ON DELETE cascade
 );
 --> statement-breakpoint
-CREATE UNIQUE INDEX `accounts_email_unique` ON `accounts` (`email`);--> statement-breakpoint
+CREATE UNIQUE INDEX `accounts_email_unique` ON `accounts` (`email`);
+--> statement-breakpoint
 CREATE TABLE `barangay_announcement_images` (
 	`_barangay_announcement_image_id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`_barangay_announcement_id` integer NOT NULL,
@@ -27,7 +29,8 @@ CREATE TABLE `barangay_announcements` (
 	`_created_at` integer DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	`_updated_at` integer DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	FOREIGN KEY (`_barangay_id`) REFERENCES `barangays`(`_barangay_id`) ON UPDATE cascade ON DELETE cascade,
-	FOREIGN KEY (`posted_by`) REFERENCES `users`(`_user_id`) ON UPDATE cascade ON DELETE set null
+	FOREIGN KEY (`posted_by`) REFERENCES `users`(`_user_id`) ON UPDATE cascade ON DELETE
+	set null
 );
 --> statement-breakpoint
 CREATE TABLE `barangay_budget_images` (
@@ -52,7 +55,8 @@ CREATE TABLE `barangay_budgets` (
 	`_created_at` integer DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	`_updated_at` integer DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	FOREIGN KEY (`_barangay_id`) REFERENCES `barangays`(`_barangay_id`) ON UPDATE cascade ON DELETE cascade,
-	FOREIGN KEY (`uploaded_by_official`) REFERENCES `officials`(`_official_id`) ON UPDATE cascade ON DELETE set null
+	FOREIGN KEY (`uploaded_by_official`) REFERENCES `officials`(`_official_id`) ON UPDATE cascade ON DELETE
+	set null
 );
 --> statement-breakpoint
 CREATE TABLE `barangay_project_images` (
@@ -102,8 +106,10 @@ CREATE TABLE `barangay_projects` (
 	`_created_at` integer DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	`_updated_at` integer DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	FOREIGN KEY (`_barangay_id`) REFERENCES `barangays`(`_barangay_id`) ON UPDATE cascade ON DELETE cascade,
-	FOREIGN KEY (`_officialId`) REFERENCES `officials`(`_official_id`) ON UPDATE cascade ON DELETE set null,
-	FOREIGN KEY (`_budget_id`) REFERENCES `barangay_budgets`(`_barangay_budget_id`) ON UPDATE cascade ON DELETE set null
+	FOREIGN KEY (`_officialId`) REFERENCES `officials`(`_official_id`) ON UPDATE cascade ON DELETE
+	set null,
+		FOREIGN KEY (`_budget_id`) REFERENCES `barangay_budgets`(`_barangay_budget_id`) ON UPDATE cascade ON DELETE
+	set null
 );
 --> statement-breakpoint
 CREATE TABLE `barangays` (
@@ -153,7 +159,8 @@ CREATE TABLE `sessions` (
 	FOREIGN KEY (`_account_id`) REFERENCES `accounts`(`_account_id`) ON UPDATE cascade ON DELETE cascade
 );
 --> statement-breakpoint
-CREATE UNIQUE INDEX `sessions_session_token_unique` ON `sessions` (`session_token`);--> statement-breakpoint
+CREATE UNIQUE INDEX `sessions_session_token_unique` ON `sessions` (`session_token`);
+--> statement-breakpoint
 CREATE TABLE `user_activities` (
 	`_user_activity_id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`_user_id` integer,
@@ -194,7 +201,8 @@ CREATE TABLE `user_verifications` (
 	`_created_at` integer DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	`_updated_at` integer DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	FOREIGN KEY (`_user_id`) REFERENCES `users`(`_user_id`) ON UPDATE cascade ON DELETE cascade,
-	FOREIGN KEY (`verified_by`) REFERENCES `users`(`_user_id`) ON UPDATE cascade ON DELETE set null
+	FOREIGN KEY (`verified_by`) REFERENCES `users`(`_user_id`) ON UPDATE cascade ON DELETE
+	set null
 );
 --> statement-breakpoint
 CREATE TABLE `users` (

@@ -22,8 +22,10 @@ export default function RootLayout() {
     const { success, error } = useMigrations(db, migrations);
 
     const [loaded, fontError] = useFonts({
-        Montserrat: require("@assets/fonts/Montserrat/Montserrat-VariableFont_wght.ttf"),
+        Montserrat: require("@assets/fonts/Montserrat/static/Montserrat-Regular.ttf"),
         MontserratItalic: require("@assets/fonts/Montserrat/Montserrat-Italic-VariableFont_wght.ttf"),
+        MontserratBold: require("@assets/fonts/Montserrat/static/Montserrat-Bold.ttf"),
+        MontserratSemiBold: require("@assets/fonts/Montserrat/static/Montserrat-SemiBold.ttf"),
         ...FontAwesome.font
     });
 
@@ -61,6 +63,7 @@ export default function RootLayout() {
 
 function RootLayoutContents() {
     const { user, isLoading, error } = useAuth();
+    console.log("Auth user:", user);
 
     if (isLoading) {
         return null;
@@ -75,13 +78,9 @@ function RootLayoutContents() {
     }
 
     return (
-        <Stack initialRouteName="(auth)">
-            <Stack.Protected guard={user !== null}>
-                <Stack.Screen name="(main)" options={{ headerShown: false }} />
-            </Stack.Protected>
-            <Stack.Protected guard={user === null}>
-                <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            </Stack.Protected>
+        <Stack initialRouteName={user ? "(main)" : "(auth)"}>
+            <Stack.Screen name="(main)" options={{ headerShown: false }} />
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
         </Stack>
     );
 }
