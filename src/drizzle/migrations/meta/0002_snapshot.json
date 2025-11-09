@@ -1,0 +1,1401 @@
+{
+    "version": "6",
+    "dialect": "sqlite",
+    "id": "50a79c57-e0b9-4240-8bfd-326b469db3bf",
+    "prevId": "8a5d5b67-468a-42e1-b42f-debe61e9cf63",
+    "tables": {
+        "accounts": {
+            "name": "accounts",
+            "columns": {
+                "_account_id": {
+                    "name": "_account_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "_user_id": {
+                    "name": "_user_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "email": {
+                    "name": "email",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "mobile_number": {
+                    "name": "mobile_number",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "''"
+                },
+                "password_hash": {
+                    "name": "password_hash",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                }
+            },
+            "indexes": {
+                "accounts_email_unique": {
+                    "name": "accounts_email_unique",
+                    "columns": ["email"],
+                    "isUnique": true
+                },
+                "accounts_mobile_number_unique": {
+                    "name": "accounts_mobile_number_unique",
+                    "columns": ["mobile_number"],
+                    "isUnique": true
+                }
+            },
+            "foreignKeys": {
+                "accounts__user_id_users__user_id_fk": {
+                    "name": "accounts__user_id_users__user_id_fk",
+                    "tableFrom": "accounts",
+                    "tableTo": "users",
+                    "columnsFrom": ["_user_id"],
+                    "columnsTo": ["_user_id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "barangay_announcement_images": {
+            "name": "barangay_announcement_images",
+            "columns": {
+                "_barangay_announcement_image_id": {
+                    "name": "_barangay_announcement_image_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "_barangay_announcement_id": {
+                    "name": "_barangay_announcement_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "url": {
+                    "name": "url",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "caption": {
+                    "name": "caption",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "_created_at": {
+                    "name": "_created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "barangay_announcement_images__barangay_announcement_id_barangay_announcements__barangay_announcement_id_fk": {
+                    "name": "barangay_announcement_images__barangay_announcement_id_barangay_announcements__barangay_announcement_id_fk",
+                    "tableFrom": "barangay_announcement_images",
+                    "tableTo": "barangay_announcements",
+                    "columnsFrom": ["_barangay_announcement_id"],
+                    "columnsTo": ["_barangay_announcement_id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "barangay_announcements": {
+            "name": "barangay_announcements",
+            "columns": {
+                "_barangay_announcement_id": {
+                    "name": "_barangay_announcement_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "_barangay_id": {
+                    "name": "_barangay_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "title": {
+                    "name": "title",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "content": {
+                    "name": "content",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "posted_by": {
+                    "name": "posted_by",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "scope": {
+                    "name": "scope",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "'barangay'"
+                },
+                "post_status": {
+                    "name": "post_status",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "'draft'"
+                },
+                "_created_at": {
+                    "name": "_created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                },
+                "_updated_at": {
+                    "name": "_updated_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "barangay_announcements__barangay_id_barangays__barangay_id_fk": {
+                    "name": "barangay_announcements__barangay_id_barangays__barangay_id_fk",
+                    "tableFrom": "barangay_announcements",
+                    "tableTo": "barangays",
+                    "columnsFrom": ["_barangay_id"],
+                    "columnsTo": ["_barangay_id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                },
+                "barangay_announcements_posted_by_users__user_id_fk": {
+                    "name": "barangay_announcements_posted_by_users__user_id_fk",
+                    "tableFrom": "barangay_announcements",
+                    "tableTo": "users",
+                    "columnsFrom": ["posted_by"],
+                    "columnsTo": ["_user_id"],
+                    "onDelete": "set null",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "barangay_budget_images": {
+            "name": "barangay_budget_images",
+            "columns": {
+                "_barangay_budget_image_id": {
+                    "name": "_barangay_budget_image_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "_barangay_budget_id": {
+                    "name": "_barangay_budget_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "url": {
+                    "name": "url",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "caption": {
+                    "name": "caption",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "_created_at": {
+                    "name": "_created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "barangay_budget_images__barangay_budget_id_barangay_budgets__barangay_budget_id_fk": {
+                    "name": "barangay_budget_images__barangay_budget_id_barangay_budgets__barangay_budget_id_fk",
+                    "tableFrom": "barangay_budget_images",
+                    "tableTo": "barangay_budgets",
+                    "columnsFrom": ["_barangay_budget_id"],
+                    "columnsTo": ["_barangay_budget_id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "barangay_budgets": {
+            "name": "barangay_budgets",
+            "columns": {
+                "_barangay_budget_id": {
+                    "name": "_barangay_budget_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "_barangay_id": {
+                    "name": "_barangay_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "uploaded_by_official": {
+                    "name": "uploaded_by_official",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "year": {
+                    "name": "year",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "category": {
+                    "name": "category",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "status": {
+                    "name": "status",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "'planned'"
+                },
+                "post_status": {
+                    "name": "post_status",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "'draft'"
+                },
+                "amount": {
+                    "name": "amount",
+                    "type": "real",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": 0
+                },
+                "remarks": {
+                    "name": "remarks",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "_created_at": {
+                    "name": "_created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                },
+                "_updated_at": {
+                    "name": "_updated_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "barangay_budgets__barangay_id_barangays__barangay_id_fk": {
+                    "name": "barangay_budgets__barangay_id_barangays__barangay_id_fk",
+                    "tableFrom": "barangay_budgets",
+                    "tableTo": "barangays",
+                    "columnsFrom": ["_barangay_id"],
+                    "columnsTo": ["_barangay_id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                },
+                "barangay_budgets_uploaded_by_official_officials__official_id_fk": {
+                    "name": "barangay_budgets_uploaded_by_official_officials__official_id_fk",
+                    "tableFrom": "barangay_budgets",
+                    "tableTo": "officials",
+                    "columnsFrom": ["uploaded_by_official"],
+                    "columnsTo": ["_official_id"],
+                    "onDelete": "set null",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "barangay_project_images": {
+            "name": "barangay_project_images",
+            "columns": {
+                "_barangay_project_image_id": {
+                    "name": "_barangay_project_image_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "_barangay_project_id": {
+                    "name": "_barangay_project_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "url": {
+                    "name": "url",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "caption": {
+                    "name": "caption",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "_created_at": {
+                    "name": "_created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "barangay_project_images__barangay_project_id_barangay_projects__barangay_project_id_fk": {
+                    "name": "barangay_project_images__barangay_project_id_barangay_projects__barangay_project_id_fk",
+                    "tableFrom": "barangay_project_images",
+                    "tableTo": "barangay_projects",
+                    "columnsFrom": ["_barangay_project_id"],
+                    "columnsTo": ["_barangay_project_id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "barangay_project_milestone_images": {
+            "name": "barangay_project_milestone_images",
+            "columns": {
+                "_barangay_project_milestone_image_id": {
+                    "name": "_barangay_project_milestone_image_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "_barangay_project_milestone_id": {
+                    "name": "_barangay_project_milestone_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "url": {
+                    "name": "url",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "caption": {
+                    "name": "caption",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "_created_at": {
+                    "name": "_created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "barangay_project_milestone_images__barangay_project_milestone_id_barangay_project_milestones__barangay_project_milestone_id_fk": {
+                    "name": "barangay_project_milestone_images__barangay_project_milestone_id_barangay_project_milestones__barangay_project_milestone_id_fk",
+                    "tableFrom": "barangay_project_milestone_images",
+                    "tableTo": "barangay_project_milestones",
+                    "columnsFrom": ["_barangay_project_milestone_id"],
+                    "columnsTo": ["_barangay_project_milestone_id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "barangay_project_milestones": {
+            "name": "barangay_project_milestones",
+            "columns": {
+                "_barangay_project_milestone_id": {
+                    "name": "_barangay_project_milestone_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "_barangay_project_id": {
+                    "name": "_barangay_project_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "title": {
+                    "name": "title",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "description": {
+                    "name": "description",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "due_date": {
+                    "name": "due_date",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "is_completed": {
+                    "name": "is_completed",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false,
+                    "default": false
+                },
+                "_created_at": {
+                    "name": "_created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                },
+                "_updated_at": {
+                    "name": "_updated_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "barangay_project_milestones__barangay_project_id_barangay_projects__barangay_project_id_fk": {
+                    "name": "barangay_project_milestones__barangay_project_id_barangay_projects__barangay_project_id_fk",
+                    "tableFrom": "barangay_project_milestones",
+                    "tableTo": "barangay_projects",
+                    "columnsFrom": ["_barangay_project_id"],
+                    "columnsTo": ["_barangay_project_id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "barangay_projects": {
+            "name": "barangay_projects",
+            "columns": {
+                "_barangay_project_id": {
+                    "name": "_barangay_project_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "_barangay_id": {
+                    "name": "_barangay_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "_officialId": {
+                    "name": "_officialId",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "_budget_id": {
+                    "name": "_budget_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "title": {
+                    "name": "title",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "description": {
+                    "name": "description",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "category": {
+                    "name": "category",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "budget_allocated": {
+                    "name": "budget_allocated",
+                    "type": "real",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false,
+                    "default": 0
+                },
+                "status": {
+                    "name": "status",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "'planned'"
+                },
+                "post_status": {
+                    "name": "post_status",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "'draft'"
+                },
+                "start_date": {
+                    "name": "start_date",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "estimated_end_date": {
+                    "name": "estimated_end_date",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "end_date": {
+                    "name": "end_date",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "_created_at": {
+                    "name": "_created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                },
+                "_updated_at": {
+                    "name": "_updated_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "barangay_projects__barangay_id_barangays__barangay_id_fk": {
+                    "name": "barangay_projects__barangay_id_barangays__barangay_id_fk",
+                    "tableFrom": "barangay_projects",
+                    "tableTo": "barangays",
+                    "columnsFrom": ["_barangay_id"],
+                    "columnsTo": ["_barangay_id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                },
+                "barangay_projects__officialId_officials__official_id_fk": {
+                    "name": "barangay_projects__officialId_officials__official_id_fk",
+                    "tableFrom": "barangay_projects",
+                    "tableTo": "officials",
+                    "columnsFrom": ["_officialId"],
+                    "columnsTo": ["_official_id"],
+                    "onDelete": "set null",
+                    "onUpdate": "cascade"
+                },
+                "barangay_projects__budget_id_barangay_budgets__barangay_budget_id_fk": {
+                    "name": "barangay_projects__budget_id_barangay_budgets__barangay_budget_id_fk",
+                    "tableFrom": "barangay_projects",
+                    "tableTo": "barangay_budgets",
+                    "columnsFrom": ["_budget_id"],
+                    "columnsTo": ["_barangay_budget_id"],
+                    "onDelete": "set null",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "barangays": {
+            "name": "barangays",
+            "columns": {
+                "_barangay_id": {
+                    "name": "_barangay_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "name": {
+                    "name": "name",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "city": {
+                    "name": "city",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "province": {
+                    "name": "province",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "avatar_image": {
+                    "name": "avatar_image",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "display_image": {
+                    "name": "display_image",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "about": {
+                    "name": "about",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "_created_at": {
+                    "name": "_created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                },
+                "_updated_at": {
+                    "name": "_updated_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "community_memberships": {
+            "name": "community_memberships",
+            "columns": {
+                "_community_membership_id": {
+                    "name": "_community_membership_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "_user_id": {
+                    "name": "_user_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "_barangay_id": {
+                    "name": "_barangay_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "community_role": {
+                    "name": "community_role",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "_created_at": {
+                    "name": "_created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                },
+                "_updated_at": {
+                    "name": "_updated_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "community_memberships__user_id_users__user_id_fk": {
+                    "name": "community_memberships__user_id_users__user_id_fk",
+                    "tableFrom": "community_memberships",
+                    "tableTo": "users",
+                    "columnsFrom": ["_user_id"],
+                    "columnsTo": ["_user_id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                },
+                "community_memberships__barangay_id_barangays__barangay_id_fk": {
+                    "name": "community_memberships__barangay_id_barangays__barangay_id_fk",
+                    "tableFrom": "community_memberships",
+                    "tableTo": "barangays",
+                    "columnsFrom": ["_barangay_id"],
+                    "columnsTo": ["_barangay_id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "officials": {
+            "name": "officials",
+            "columns": {
+                "_official_id": {
+                    "name": "_official_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "_user_id": {
+                    "name": "_user_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "_barangay_id": {
+                    "name": "_barangay_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "position": {
+                    "name": "position",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "term_start": {
+                    "name": "term_start",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "term_end": {
+                    "name": "term_end",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "_created_at": {
+                    "name": "_created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                },
+                "_updated_at": {
+                    "name": "_updated_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "officials__user_id_users__user_id_fk": {
+                    "name": "officials__user_id_users__user_id_fk",
+                    "tableFrom": "officials",
+                    "tableTo": "users",
+                    "columnsFrom": ["_user_id"],
+                    "columnsTo": ["_user_id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                },
+                "officials__barangay_id_barangays__barangay_id_fk": {
+                    "name": "officials__barangay_id_barangays__barangay_id_fk",
+                    "tableFrom": "officials",
+                    "tableTo": "barangays",
+                    "columnsFrom": ["_barangay_id"],
+                    "columnsTo": ["_barangay_id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "sessions": {
+            "name": "sessions",
+            "columns": {
+                "_session_id": {
+                    "name": "_session_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "_account_id": {
+                    "name": "_account_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "session_token": {
+                    "name": "session_token",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "expires_at": {
+                    "name": "expires_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "ip_address": {
+                    "name": "ip_address",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "user_agent": {
+                    "name": "user_agent",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "_created_at": {
+                    "name": "_created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                },
+                "_updated_at": {
+                    "name": "_updated_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                }
+            },
+            "indexes": {
+                "sessions_session_token_unique": {
+                    "name": "sessions_session_token_unique",
+                    "columns": ["session_token"],
+                    "isUnique": true
+                }
+            },
+            "foreignKeys": {
+                "sessions__account_id_accounts__account_id_fk": {
+                    "name": "sessions__account_id_accounts__account_id_fk",
+                    "tableFrom": "sessions",
+                    "tableTo": "accounts",
+                    "columnsFrom": ["_account_id"],
+                    "columnsTo": ["_account_id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "user_activities": {
+            "name": "user_activities",
+            "columns": {
+                "_user_activity_id": {
+                    "name": "_user_activity_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "_user_id": {
+                    "name": "_user_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "action": {
+                    "name": "action",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "metadata": {
+                    "name": "metadata",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "target_type": {
+                    "name": "target_type",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "ip_address": {
+                    "name": "ip_address",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "user_agent": {
+                    "name": "user_agent",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "_created_at": {
+                    "name": "_created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "user_activities__user_id_users__user_id_fk": {
+                    "name": "user_activities__user_id_users__user_id_fk",
+                    "tableFrom": "user_activities",
+                    "tableTo": "users",
+                    "columnsFrom": ["_user_id"],
+                    "columnsTo": ["_user_id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "user_id_cards": {
+            "name": "user_id_cards",
+            "columns": {
+                "_user_id_card_id": {
+                    "name": "_user_id_card_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "_user_id": {
+                    "name": "_user_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "type": {
+                    "name": "type",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "image_url": {
+                    "name": "image_url",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "_created_at": {
+                    "name": "_created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "user_id_cards__user_id_users__user_id_fk": {
+                    "name": "user_id_cards__user_id_users__user_id_fk",
+                    "tableFrom": "user_id_cards",
+                    "tableTo": "users",
+                    "columnsFrom": ["_user_id"],
+                    "columnsTo": ["_user_id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "user_verification_images": {
+            "name": "user_verification_images",
+            "columns": {
+                "_user_verification_image_id": {
+                    "name": "_user_verification_image_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "verification_id": {
+                    "name": "verification_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "url": {
+                    "name": "url",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "caption": {
+                    "name": "caption",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "_created_at": {
+                    "name": "_created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "user_verification_images_verification_id_user_verifications__user_verification_id_fk": {
+                    "name": "user_verification_images_verification_id_user_verifications__user_verification_id_fk",
+                    "tableFrom": "user_verification_images",
+                    "tableTo": "user_verifications",
+                    "columnsFrom": ["verification_id"],
+                    "columnsTo": ["_user_verification_id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "user_verifications": {
+            "name": "user_verifications",
+            "columns": {
+                "_user_verification_id": {
+                    "name": "_user_verification_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "_user_id": {
+                    "name": "_user_id",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "type": {
+                    "name": "type",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "status": {
+                    "name": "status",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "'pending'"
+                },
+                "verified_by": {
+                    "name": "verified_by",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "remarks": {
+                    "name": "remarks",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "_created_at": {
+                    "name": "_created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                },
+                "_updated_at": {
+                    "name": "_updated_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {
+                "user_verifications__user_id_users__user_id_fk": {
+                    "name": "user_verifications__user_id_users__user_id_fk",
+                    "tableFrom": "user_verifications",
+                    "tableTo": "users",
+                    "columnsFrom": ["_user_id"],
+                    "columnsTo": ["_user_id"],
+                    "onDelete": "cascade",
+                    "onUpdate": "cascade"
+                },
+                "user_verifications_verified_by_users__user_id_fk": {
+                    "name": "user_verifications_verified_by_users__user_id_fk",
+                    "tableFrom": "user_verifications",
+                    "tableTo": "users",
+                    "columnsFrom": ["verified_by"],
+                    "columnsTo": ["_user_id"],
+                    "onDelete": "set null",
+                    "onUpdate": "cascade"
+                }
+            },
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        },
+        "users": {
+            "name": "users",
+            "columns": {
+                "_user_id": {
+                    "name": "_user_id",
+                    "type": "integer",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "autoincrement": true
+                },
+                "display_name": {
+                    "name": "display_name",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "display_image": {
+                    "name": "display_image",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "autoincrement": false
+                },
+                "full_name": {
+                    "name": "full_name",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false
+                },
+                "role": {
+                    "name": "role",
+                    "type": "text",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "'resident'"
+                },
+                "_created_at": {
+                    "name": "_created_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                },
+                "_updated_at": {
+                    "name": "_updated_at",
+                    "type": "integer",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "autoincrement": false,
+                    "default": "CURRENT_TIMESTAMP"
+                }
+            },
+            "indexes": {},
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {},
+            "checkConstraints": {}
+        }
+    },
+    "views": {},
+    "enums": {},
+    "_meta": {
+        "schemas": {},
+        "tables": {},
+        "columns": {}
+    },
+    "internal": {
+        "indexes": {}
+    }
+}

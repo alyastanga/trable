@@ -126,6 +126,7 @@ const accounts = sqliteTable("accounts", {
         onUpdate: "cascade"
     }),
     email: text("email").notNull().unique(),
+    mobileNumber: text("mobile_number").notNull().unique().default(""),
     passwordHash: text("password_hash").notNull()
 });
 const sessions = sqliteTable("sessions", {
