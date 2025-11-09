@@ -18,7 +18,7 @@ export default function MainLayout() {
                         bottom: 25,
                         borderRadius: 30,
                         height: 60,
-                        width: 370,
+                        width: 385,
                         elevation: 5
                     },
 
@@ -35,13 +35,13 @@ export default function MainLayout() {
                     name="newsfeed"
                     options={{
                         title: "Home",
-                        tabBarIcon: ({ color, size, focused }) => (
+                        tabBarIcon: ({ size, focused }) => (
                             <View
                                 style={{
                                     backgroundColor: focused
                                         ? "#e1eafcff"
                                         : "transparent",
-                                    width: 60,
+                                    width: 80,
                                     height: 50,
                                     borderRadius: 30,
                                     justifyContent: "center",
@@ -67,7 +67,7 @@ export default function MainLayout() {
                                     backgroundColor: focused
                                         ? "#e1eafcff"
                                         : "transparent",
-                                    width: 60,
+                                    width: 80,
                                     height: 50,
                                     borderRadius: 30,
                                     justifyContent: "center",
@@ -93,7 +93,7 @@ export default function MainLayout() {
                                     backgroundColor: focused
                                         ? "#d5e3ffff"
                                         : "transparent",
-                                    width: 60,
+                                    width: 80,
                                     height: 50,
                                     borderRadius: 30,
                                     justifyContent: "center",
@@ -119,7 +119,7 @@ export default function MainLayout() {
                                     backgroundColor: focused
                                         ? "#d5e3ffff"
                                         : "transparent",
-                                    width: 60,
+                                    width: 80,
                                     height: 50,
                                     borderRadius: 30,
                                     justifyContent: "center",

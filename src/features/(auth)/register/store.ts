@@ -27,12 +27,12 @@ type RegisterState = {
 export const useRegisterStore = create<RegisterState>((set, get) => {
     return {
         email: "",
-        //  mobileNumber: "",
+        mobileNumber: "",
         password: "",
         confirmPassword: "",
 
         emailError: "",
-        // mobileNumberError: "",
+        mobileNumberError: "",
         passwordError: "",
         confirmPasswordError: "",
 
@@ -45,14 +45,14 @@ export const useRegisterStore = create<RegisterState>((set, get) => {
             set({ email, emailError });
         },
 
-        /* setMobileNumber: (mobileNumber: string) => {
+        setMobileNumber: (mobileNumber: string) => {
             const { hasSubmittedOnce } = get();
             const mobileNumberError =
                 hasSubmittedOnce && !/^\d{10,15}$/.test(mobileNumber)
                     ? "Enter a valid mobile number"
                     : "";
             set({ mobileNumber, mobileNumberError });
-        }, */
+        },
 
         setPassword: (password: string) => {
             const { hasSubmittedOnce } = get();
@@ -73,20 +73,19 @@ export const useRegisterStore = create<RegisterState>((set, get) => {
         },
 
         validate: () => {
-            const { email, /*mobileNumber, */ password, confirmPassword } =
-                get();
+            const { email, mobileNumber, password, confirmPassword } = get();
 
             const emailError = validateEmail(email);
-            /* const mobileNumberError = !/^\d{10,15}$/.test(mobileNumber)
+            const mobileNumberError = !/^\d{10,15}$/.test(mobileNumber)
                 ? "Enter a valid mobile number"
-                : "";*/
+                : "";
             const passwordError = validatePassword(password);
             const confirmPasswordError =
                 confirmPassword !== password ? "Passwords do not match" : "";
 
             set({
                 emailError,
-                // mobileNumberError,
+                mobileNumberError,
                 passwordError,
                 confirmPasswordError,
                 hasSubmittedOnce: true
@@ -94,7 +93,7 @@ export const useRegisterStore = create<RegisterState>((set, get) => {
 
             return (
                 !emailError &&
-                //   !mobileNumberError &&
+                !mobileNumberError &&
                 !passwordError &&
                 !confirmPasswordError
             );
@@ -103,12 +102,12 @@ export const useRegisterStore = create<RegisterState>((set, get) => {
         clearAll: () =>
             set({
                 email: "",
-                //    mobileNumber: "",
+                mobileNumber: "",
                 password: "",
                 confirmPassword: "",
 
                 emailError: "",
-                //   mobileNumberError: "",
+                mobileNumberError: "",
                 passwordError: "",
                 confirmPasswordError: "",
                 hasSubmittedOnce: false

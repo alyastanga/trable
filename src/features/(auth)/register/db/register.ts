@@ -6,11 +6,11 @@ import { accounts } from "@/drizzle/schema";
 type RegisterData = {
     email: string;
     password: string;
-    // mobileNumber: string;
+    mobileNumber: string;
 };
 
 export async function registerUser(data: RegisterData) {
-    const { email, password /*, mobileNumber */ } = data;
+    const { email, password, mobileNumber } = data;
 
     const existingUser = await db
         .select()
@@ -25,7 +25,7 @@ export async function registerUser(data: RegisterData) {
         .insert(accounts)
         .values({
             email,
-            /// mobileNumber,
+            mobileNumber,
             passwordHash: password
         })
         .returning();

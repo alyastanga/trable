@@ -55,8 +55,8 @@ export default function RegisterScreen() {
         console.log("Form is valid, proceeding with registration...");
         registerUser({
             email,
-            password
-            //mobileNumber
+            password,
+            mobileNumber
         })
             .then(() => {
                 console.log("Registration successful.");
@@ -113,39 +113,39 @@ export default function RegisterScreen() {
                         </FormControlErrorText>
                     </FormControlError>
                 </FormControl>
-                {/*<FormControl
-                        isInvalid={!!mobileNumberError}
-                        size="md"
-                        isDisabled={false}
-                        isReadOnly={false}
-                        isRequired={true}
+                <FormControl
+                    isInvalid={!!mobileNumberError}
+                    size="md"
+                    isDisabled={false}
+                    isReadOnly={false}
+                    isRequired={true}
+                >
+                    <FormControlLabel>
+                        <FormControlLabelText size="xl">
+                            Mobile Number
+                        </FormControlLabelText>
+                    </FormControlLabel>
+                    <Input
+                        variant="outline"
+                        size="lg"
+                        className="w-full rounded-xl"
                     >
-                        <FormControlLabel>
-                            <FormControlLabelText size="xl">
-                                Mobile Number
-                            </FormControlLabelText>
-                        </FormControlLabel>
-                        <Input
-                            variant="outline"
-                            size="lg"
-                            className="w-full rounded-xl"
-                        >
-                            <InputField
-                                value={mobileNumber}
-                                onChangeText={setMobileNumber}
-                                placeholder="Enter your mobile number..."
-                            />
-                        </Input>
-                        <FormControlError>
-                            <FormControlErrorIcon
-                                as={AlertCircleIcon}
-                                className="text-red-500"
-                            />
-                            <FormControlErrorText className="text-red-500">
-                                {mobileNumberError}
-                            </FormControlErrorText>
-                        </FormControlError>
-                    </FormControl> */}
+                        <InputField
+                            value={mobileNumber}
+                            onChangeText={setMobileNumber}
+                            placeholder="Enter your mobile number..."
+                        />
+                    </Input>
+                    <FormControlError>
+                        <FormControlErrorIcon
+                            as={AlertCircleIcon}
+                            className="text-red-500"
+                        />
+                        <FormControlErrorText className="text-red-500">
+                            {mobileNumberError}
+                        </FormControlErrorText>
+                    </FormControlError>
+                </FormControl>
                 <FormControl
                     isInvalid={!!passwordError}
                     size="sm"

@@ -81,6 +81,10 @@ function RootLayoutContents() {
         <Stack initialRouteName={user ? "(main)" : "(auth)"}>
             <Stack.Screen name="(main)" options={{ headerShown: false }} />
             <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen
+                name="barangayPages"
+                options={{ headerShown: false }}
+            />
         </Stack>
     );
 }

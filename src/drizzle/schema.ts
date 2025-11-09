@@ -126,7 +126,7 @@ const accounts = sqliteTable("accounts", {
         onUpdate: "cascade"
     }),
     email: text("email").notNull().unique(),
-    // mobileNumber: text("mobile_number").notNull().unique(),
+    mobileNumber: text("mobile_number").notNull().unique().default(""),
     passwordHash: text("password_hash").notNull()
 });
 const sessions = sqliteTable("sessions", {
@@ -167,7 +167,6 @@ const barangays = sqliteTable("barangays", {
     name: text("name").notNull(),
     city: text("city").notNull(),
     province: text("province").notNull(),
-    avatarImage: text("avatar_image"),
     displayImage: text("display_image"),
     about: text("about"),
     ...timestamps
