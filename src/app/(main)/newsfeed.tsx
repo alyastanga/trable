@@ -78,14 +78,16 @@ export default function NewsfeedScreen() {
                 ...announcementData.map((item) => {
                     return {
                         ...item,
-                        type: "announcement"
+                        type: "announcement",
+                        comments: []
                     };
                 }),
 
                 ...projectData.map((item) => {
                     return {
                         ...item,
-                        type: "project"
+                        type: "project",
+                        comments: []
                     };
                 })
             ];

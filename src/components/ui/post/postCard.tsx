@@ -16,6 +16,7 @@ interface PostCardProps {
         title: string;
         content: string;
         barangayImage: string;
+        comments?: any[];
     };
 }
 
@@ -58,7 +59,7 @@ const PostCard = ({ item }: PostCardProps) => {
                         color={liked ? "red" : "black"}
                     />
                 </Pressable>
-                <CommentSection comments={item.comments} />
+                <CommentSection comments={item.comments || []} />
             </View>
         </SafeAreaView>
     );

@@ -4,7 +4,11 @@ import { View, Text } from "react-native";
 //eslint-disable-next-line project-structure/independent-modules
 import { sampleUsers } from "@/features/users/db/sampleUser";
 
-export default function CommentSection({ comments }: { comments: any[] }) {
+export default function CommentSection({
+    comments = []
+}: {
+    comments?: any[];
+}) {
     const postComments = comments;
 
     return (
