@@ -10,6 +10,7 @@ import {
     barangays,
     users,
     barangayProjects,
+    barangayProjectImages,
     officials
 } from "@/drizzle/schema";
 //eslint-disable-next-line project-structure/independent-modules
@@ -26,7 +27,8 @@ export default function NewsfeedScreen() {
             await db.delete(barangayAnnouncements);
             await db.delete(barangayProjects);
             await db.delete(officials);
-        */
+            await db.delete(barangayBudgets);
+            */
 
             await seedDatabase();
             const announcementData = await db
@@ -50,6 +52,7 @@ export default function NewsfeedScreen() {
                     id: barangayProjects._barangayProjectId,
                     title: barangayProjects.title,
                     content: barangayProjects.description,
+                    postImage: barangayProjectImages.url,
                     category: barangayProjects.category,
                     budgetAllocated: barangayProjects.budgetAllocated,
                     status: barangayProjects.status,
@@ -70,7 +73,16 @@ export default function NewsfeedScreen() {
                     officials,
                     eq(barangayProjects._officialId, officials._officialId)
                 )
-                .leftJoin(users, eq(officials._userId, users._userId));
+                .leftJoin(users, eq(officials._userId, users._userId))
+                .leftJoin(
+                    barangayProjectImages,
+                    eq(
+                        barangayProjects._barangayProjectId,
+                        barangayProjectImages._barangayProjectId
+                    )
+                )
+
+                .groupBy(barangayProjects._barangayProjectId);
 
             console.log("Fetched project: ", projectData);
 
@@ -101,7 +113,7 @@ export default function NewsfeedScreen() {
     }, []);
 
     return (
-        <SafeAreaView className="flex-1 justify-center align-center p-6 bg-background-900 dark:bg-background-900">
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#F0F0F0" }}>
             <View style={styles.titleContainer}>
                 <Pressable onPress={() => console.log("Im pressing the logo")}>
                     <Image
@@ -145,10 +157,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginBottom: 10,
-
+        padding: 16,
+        paddingHorizontal: 20,
         position: "relative"
     },
+
     iconContainer: {
         flexDirection: "row",
         justifyContent: "center",
@@ -157,6 +170,8 @@ const styles = StyleSheet.create({
     },
     listStyle: {
         paddingTop: 1,
-        paddingHorizontal: 4
+        flexGrow: 1,
+        paddingLeft: 16,
+        paddingRight: 16
     }
 });

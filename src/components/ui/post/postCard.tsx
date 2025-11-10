@@ -17,6 +17,7 @@ interface PostCardProps {
         content: string;
         barangayImage: string;
         comments?: any[];
+        postImage?: string;
     };
 }
 
@@ -29,6 +30,20 @@ const PostCard = ({ item }: PostCardProps) => {
         router.push(`/barangayPages/${item.barangayName}` as any);
         console.log("Navigated to Barangay: ", item.barangayName);
     }
+
+    const isLocalKeyAvailable = item.postImage
+        ? item.postImage in barangayImages
+        : false;
+
+    if (item.postImage === "road-before.jpg" && isLocalKeyAvailable) {
+        console.log("SUCCESS: Local image found in map!");
+    }
+
+    const postImageSource = item.postImage
+        ? barangayImages[item.postImage]
+            ? barangayImages[item.postImage]
+            : { uri: item.postImage }
+        : null;
 
     return (
         <SafeAreaView>
@@ -48,6 +63,13 @@ const PostCard = ({ item }: PostCardProps) => {
                 </View>
 
                 <View style={styles.contentContainer}>
+                    {postImageSource && (
+                        <Image
+                            source={postImageSource}
+                            style={styles.postImage}
+                            resizeMode="cover"
+                        />
+                    )}
                     <Text style={styles.title}>{item.title}</Text>
                     <Text style={styles.content}>{item.content}</Text>
                 </View>
@@ -80,6 +102,14 @@ const styles = StyleSheet.create({
         elevation: 10,
         borderRadius: 20,
         padding: 20
+    },
+
+    postImage: {
+        width: "100%",
+        height: 200,
+        borderRadius: 10,
+        marginTop: 10,
+        marginBottom: 10
     },
 
     header: {
