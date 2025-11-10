@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
+
 import BudgetProgressBar from "./BudgetProgressBar";
 
 interface BudgetItem {

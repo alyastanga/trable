@@ -12,8 +12,8 @@ import {
     FlatList
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import BudgetView from "@/components/barangay/BudgetView";
 
+import BudgetView from "@/components/barangay/BudgetView";
 import PostCard from "@/components/ui/post/postCard";
 import { db } from "@/drizzle/db";
 import {
