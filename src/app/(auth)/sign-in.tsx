@@ -154,6 +154,7 @@ export default function SignInScreen() {
                             value={password}
                             onChangeText={setPassword}
                             placeholder="Enter your password..."
+                            secureTextEntry={true}
                         />
                     </Input>
                     <FormControlHelper>

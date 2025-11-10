@@ -15,6 +15,13 @@
             "when": 1762281385486,
             "tag": "0002_hesitant_brother_voodoo",
             "breakpoints": true
+        },
+        {
+            "idx": 3,
+            "version": "6",
+            "when": 1762761576690,
+            "tag": "0003_sour_katie_power",
+            "breakpoints": true
         }
     ]
 }

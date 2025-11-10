@@ -1,13 +1,17 @@
 import { FontAwesome } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
-import React from "react";
-import { Text, View, StyleSheet, Pressable, Image } from "react-native";
+import React, { useState } from "react";
+import { Text, View, StyleSheet, Pressable, Image, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Button, ButtonText } from "@/components/ui/button";
 import useAuth from "@/features/(auth)/use-auth";
 
+import EditProfileModal from "../../features/editProfileModal";
+
 export default function Profile() {
+    const [modalVisible, setModalVisible] = useState(false);
     const router = useRouter();
     const { user, setUser } = useAuth();
     console.log("Profile user:", user);
@@ -20,6 +24,81 @@ export default function Profile() {
     function handleSignOut() {
         setUser(null);
         router.replace("/sign-in");
+    }
+
+    async function handleTakePhoto() {
+        try {
+            const { status } =
+                await ImagePicker.requestCameraPermissionsAsync();
+            if (status !== "granted") {
+                Alert.alert(
+                    "Permission required",
+                    "Camera permission is required to take a photo."
+                );
+                return;
+            }
+
+            const result = await ImagePicker.launchCameraAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                quality: 0.7,
+                allowsEditing: true
+            });
+
+            if (!result.canceled && result.assets?.[0]?.uri) {
+                const uri = result.assets[0].uri;
+                setUser(user ? ({ ...user, photoUrl: uri } as any) : user);
+            }
+        } catch (err) {
+            console.error("Take photo error:", err);
+            Alert.alert("Error", "Could not take photo.");
+        }
+    }
+
+    async function handleChoose() {
+        try {
+            const { status } =
+                await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (status !== "granted") {
+                Alert.alert(
+                    "Permission required",
+                    "Media library permission is required to choose a photo."
+                );
+                return;
+            }
+
+            const result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                quality: 0.7,
+                allowsEditing: true
+            });
+
+            if (!result.canceled && result.assets?.[0]?.uri) {
+                const uri = result.assets[0].uri;
+                setUser(user ? ({ ...user, photoUrl: uri } as any) : user);
+            }
+        } catch (err) {
+            console.error("Choose photo error:", err);
+            Alert.alert("Error", "Could not choose photo.");
+        }
+    }
+
+    function handleRemove() {
+        Alert.alert(
+            "Remove Photo",
+            "Are you sure you want to remove your profile photo?",
+            [
+                { text: "Cancel", style: "cancel" },
+                {
+                    text: "Remove",
+                    style: "destructive",
+                    onPress: () =>
+                        setUser(
+                            user ? ({ ...user, photoUrl: null } as any) : user
+                        )
+                }
+            ],
+            { cancelable: true }
+        );
     }
 
     return (
@@ -55,41 +134,30 @@ export default function Profile() {
                         {user?.role || "Unverified"}
                     </Text>
                     <Button
-                        style={{
-                            backgroundColor: "#1D4ED8",
-                            borderRadius: 20,
-                            width: "100%",
-                            alignItems: "center",
-                            marginBottom: 10
-                        }}
+                        className="bg-[#1D4ED8] rounded-2xl w-full items-center mb-2.5"
+                        onPress={() => router.push("/sign-in")}
                     >
-                        <ButtonText
-                            style={{
-                                color: "white",
-                                fontFamily: "MontserratSemiBold",
-                                fontSize: 9.5
-                            }}
-                        >
+                        <ButtonText className="text-white font-[MontserratSemiBold] text-[9.5px]">
                             Verify Account
                         </ButtonText>
                     </Button>
+
                     <Button
-                        style={{
-                            borderRadius: 20,
-                            width: "100%",
-                            alignItems: "center",
-                            marginBottom: 10
-                        }}
+                        className="rounded-2xl w-full items-center mb-2.5"
+                        onPress={() => setModalVisible(true)}
                     >
-                        <ButtonText
-                            style={{
-                                fontFamily: "MontserratSemiBold",
-                                fontSize: 9.5
-                            }}
-                        >
+                        <ButtonText className="font-[MontserratSemiBold] text-[9.5px]">
                             Edit Profile
                         </ButtonText>
                     </Button>
+
+                    <EditProfileModal
+                        visible={modalVisible}
+                        onClose={() => setModalVisible(false)}
+                        onTakePhoto={handleTakePhoto}
+                        onChooseFromGallery={handleChoose}
+                        onRemove={handleRemove}
+                    />
                 </View>
 
                 <View style={styles.rightColumn}>
