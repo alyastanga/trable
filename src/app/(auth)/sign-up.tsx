@@ -167,6 +167,7 @@ export default function RegisterScreen() {
                             value={password}
                             onChangeText={setPassword}
                             placeholder="Enter your password..."
+                            secureTextEntry={true}
                         />
                     </Input>
                     <FormControlError>
@@ -200,6 +201,7 @@ export default function RegisterScreen() {
                             value={confirmPassword}
                             onChangeText={setConfirmPassword}
                             placeholder="Confirm password..."
+                            secureTextEntry={true}
                         />
                     </Input>
                     <FormControlError>
@@ -219,6 +221,14 @@ export default function RegisterScreen() {
                     onPress={handleSubmit}
                 >
                     <ButtonText>Create Account</ButtonText>
+                </Button>
+                <Button
+                    className="w-full rounded-xl"
+                    size="lg"
+                    variant="outline"
+                    onPress={() => router.push("/sign-in")}
+                >
+                    <ButtonText>Login</ButtonText>
                 </Button>
             </VStack>
         </SafeAreaView>

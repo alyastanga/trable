@@ -161,7 +161,8 @@ export async function seedDatabase() {
             .values({
                 displayName: data.user.displayName,
                 fullName: data.user.fullName,
-                role: data.user.role
+                role: data.user.role,
+                photoUrl: (data.user as any).photoUrl ?? null
             })
             .returning();
 

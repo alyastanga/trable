@@ -14,6 +14,7 @@ const users = sqliteTable("users", {
     _userId: integer("_user_id").primaryKey({ autoIncrement: true }),
     displayName: text("display_name").notNull(),
     displayImage: text("display_image"),
+    photoUrl: text("photo_url"),
     fullName: text("full_name").notNull(),
     role: text("role", {
         enum: ["resident", "official", "admin"]
