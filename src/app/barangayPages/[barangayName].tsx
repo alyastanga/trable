@@ -1,5 +1,5 @@
 import { AntDesign } from "@expo/vector-icons";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
@@ -13,9 +13,17 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import BudgetView from "@/components/barangay/BudgetView";
 import PostCard from "@/components/ui/post/postCard";
 import { db } from "@/drizzle/db";
-import { barangayAnnouncements, barangays } from "@/drizzle/schema";
+import {
+    barangayAnnouncements,
+    barangayBudgets,
+    barangayProjects,
+    barangays,
+    users,
+    officials
+} from "@/drizzle/schema";
 import { barangayImages } from "assets/images/barangayImages/barangayImages";
 
 const TABS = {
@@ -26,18 +34,76 @@ const TABS = {
     OFFICIALS: "Officials"
 };
 
+interface BudgetData {
+    year: number;
+    category: string;
+    allocatedAmount: number;
+}
+
+interface OfficialsData {
+    name: string;
+    position: string;
+    displayImage: string | null;
+    termStart: string | null;
+    termEnd: string | null;
+}
+
 export default function BarangayPage() {
     const { barangayName } = useLocalSearchParams();
     const [barangayData, setBarangayData] = useState<any>(null);
+    const [projects, setProject] = useState<any>(null);
     const [announcements, setAnnouncements] = useState<any[]>([]);
+    const [budgetData, setBudgetData] = useState<BudgetData[]>([]);
+    const [officialsData, setOfficialsData] = useState<OfficialsData[]>([]);
     const [activeTab, setActiveTab] = useState(TABS.ALL);
     const router = useRouter();
+
+    async function fetchOfficialsData(_barangayId: number) {
+        if (!_barangayId) return;
+
+        try {
+            const official = await db
+                .select({
+                    name: users.fullName,
+                    position: officials.position,
+                    displayImage: users.displayImage,
+                    termStart: officials.termStart,
+                    termEnd: officials.termEnd
+                })
+                .from(officials)
+                .leftJoin(users, eq(officials._userId, users._userId))
+                .where(eq(officials._barangayId, _barangayId));
+
+            setOfficialsData(official as OfficialsData[]);
+        } catch (error) {
+            console.error("Error fetching officials data:", error);
+        }
+    }
+
+    async function fetchBarangayBudget(_barangayId: number) {
+        if (!_barangayId) return;
+
+        try {
+            const budget = await db
+                .select({
+                    year: barangayBudgets.year,
+                    category: barangayBudgets.category,
+                    allocatedAmount: barangayBudgets.amount
+                })
+                .from(barangayBudgets)
+                .where(eq(barangayBudgets._barangayId, _barangayId))
+                .orderBy(desc(barangayBudgets.year), barangayBudgets.category);
+
+            setBudgetData(budget);
+        } catch (error) {
+            console.error("Error fetching budget data:", error);
+        }
+    }
 
     useEffect(() => {
         async function fetchBarangay() {
             if (!barangayName || typeof barangayName !== "string") return;
 
-            // Fetch Barangay Data
             const barangay = await db
                 .select({
                     _barangayId: barangays._barangayId,
@@ -54,7 +120,6 @@ export default function BarangayPage() {
             setBarangayData(barangay[0]);
             const _barangayId = barangay[0]._barangayId;
 
-            // Fetch Announcements
             const ann = await db
                 .select()
                 .from(barangayAnnouncements)
@@ -72,7 +137,26 @@ export default function BarangayPage() {
                 comments: []
             }));
 
+            const proj = await db
+                .select()
+                .from(barangayProjects)
+                .where(eq(barangayProjects._barangayId, _barangayId));
+
+            const formattedProjects = proj.map((item) => ({
+                id: item._barangayProjectId,
+                title: item.title,
+                content: item.description,
+                type: "project",
+                barangayName: barangay[0].name,
+                barangayImage: barangay[0].displayImage,
+                city: barangay[0].city,
+                province: barangay[0].province,
+                comments: []
+            }));
             setAnnouncements(formattedAnnouncements);
+            setProject(formattedProjects);
+            fetchBarangayBudget(_barangayId);
+            fetchOfficialsData(_barangayId);
         }
 
         fetchBarangay();
@@ -90,19 +174,100 @@ export default function BarangayPage() {
         );
 
     const renderTabContent = () => {
-        if (activeTab === TABS.ALL || activeTab === TABS.ANNOUNCEMENTS) {
+        if (activeTab === TABS.ALL) {
+            const allPosts = [...announcements, ...projects];
+
+            return (
+                <FlatList
+                    data={allPosts}
+                    keyExtractor={(item) => `${item.type}-${item.id}`}
+                    renderItem={({ item }) => <PostCard item={item} />}
+                    contentContainerStyle={styles.listContainer}
+                    scrollEnabled={false}
+                />
+            );
+        }
+
+        if (activeTab === TABS.ANNOUNCEMENTS) {
             return (
                 <FlatList
                     data={announcements}
                     keyExtractor={(item) => `ann-${item.id}`}
                     renderItem={({ item }) => <PostCard item={item} />}
                     contentContainerStyle={styles.listContainer}
-                    scrollEnabled={false} // CRUCIAL: Must be false when nested in ScrollView
+                    scrollEnabled={false}
                 />
             );
         }
 
-        // Placeholder return for other tabs
+        if (activeTab === TABS.PROJECTS) {
+            return (
+                <FlatList
+                    data={projects}
+                    keyExtractor={(item) => `proj-${item.id}`}
+                    renderItem={({ item }) => <PostCard item={item} />}
+                    contentContainerStyle={styles.listContainer}
+                    scrollEnabled={false}
+                />
+            );
+        }
+
+        if (activeTab === TABS.BUDGET) {
+            return (
+                <View style={styles.listContainer}>
+                    <BudgetView data={budgetData} />
+                </View>
+            );
+        }
+
+        if (activeTab === TABS.OFFICIALS) {
+            if (officialsData.length === 0) {
+                return (
+                    <View style={styles.placeholderContainer}>
+                        <Text style={styles.placeholderText}>
+                            No officials listed for this barangay.
+                        </Text>
+                    </View>
+                );
+            }
+
+            return (
+                <View style={styles.listContainer}>
+                    <FlatList
+                        data={officialsData}
+                        keyExtractor={(item, index) =>
+                            `${item.position}-${index}`
+                        }
+                        renderItem={({ item }) => (
+                            <View style={styles.officialCard}>
+                                <Image
+                                    source={
+                                        item.displayImage
+                                            ? { uri: item.displayImage }
+                                            : require("assets/images/DefaultPic.png")
+                                    }
+                                    style={styles.officialImage}
+                                />
+                                <View style={styles.officialDetails}>
+                                    <Text style={styles.officialName}>
+                                        {item.name}
+                                    </Text>
+                                    <Text style={styles.officialPosition}>
+                                        {item.position}
+                                    </Text>
+                                    <Text style={styles.officialTerm}>
+                                        Term: {item.termStart || "N/A"} -{" "}
+                                        {item.termEnd || "Present"}
+                                    </Text>
+                                </View>
+                            </View>
+                        )}
+                        contentContainerStyle={styles.listContainer}
+                        scrollEnabled={false}
+                    />
+                </View>
+            );
+        }
         return (
             <View style={styles.placeholderContainer}>
                 <Text style={styles.placeholderText}>
@@ -114,7 +279,6 @@ export default function BarangayPage() {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-            {/* Header */}
             <View style={styles.headerContainer}>
                 <Pressable onPress={() => console.log("Im pressing the logo")}>
                     <Image
@@ -173,7 +337,6 @@ export default function BarangayPage() {
                         </Pressable>
                     ))}
                 </ScrollView>
-
                 {renderTabContent()}
             </ScrollView>
         </SafeAreaView>
@@ -292,7 +455,7 @@ const styles = StyleSheet.create({
     },
 
     listContainer: {
-        paddingHorizontal: 16
+        paddingHorizontal: 20
     },
 
     announcementItem: {
@@ -308,7 +471,6 @@ const styles = StyleSheet.create({
         elevation: 2
     },
     announcementTitle: {
-        fontWeight: "bold",
         fontSize: 16,
         fontFamily: "MontserratSemiBold",
         marginBottom: 4
@@ -316,5 +478,49 @@ const styles = StyleSheet.create({
     announcementContent: {
         color: "#4B5563",
         fontFamily: "Montserrat"
+    },
+
+    officialCard: {
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#FFFFFF",
+        borderRadius: 12,
+        padding: 15,
+        marginBottom: 10,
+        marginHorizontal: 1,
+        borderWidth: 1,
+        borderColor: "#E5E7EB",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.05,
+        shadowRadius: 2,
+        elevation: 1
+    },
+    officialImage: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: "#D1D5DB",
+        marginRight: 15
+    },
+    officialDetails: {
+        flex: 1,
+        justifyContent: "center"
+    },
+    officialName: {
+        fontSize: 18,
+        fontFamily: "MontserratSemiBold",
+        color: "#111827"
+    },
+    officialPosition: {
+        fontSize: 14,
+        fontFamily: "Montserrat",
+        color: "#1D4ED8"
+    },
+    officialTerm: {
+        fontSize: 12,
+        fontFamily: "Montserrat",
+        color: "#6B7280",
+        marginTop: 2
     }
 });

@@ -32,17 +32,17 @@ export async function seedDatabase() {
                 termEnd: "2026-12-31"
             },
             budget: {
-                year: 2024,
+                year: 2025,
                 category: "infrastructure" as const,
                 status: "approved" as const,
                 amount: 500000,
                 remarks: "Budget for road improvement"
             },
             project: {
-                title: "Main Road Rehabilitation",
+                title: "Side Walk Rehabilitation Progress",
                 description:
-                    "Complete rehabilitation of the main road including drainage system",
-                category: "infrastructure" as const,
+                    "On-going rehabilitation of the side walk along Barangay San Isidro.",
+                category: "Infrastructure" as const,
                 budgetAllocated: 450000,
                 status: "ongoing" as const,
                 startDate: new Date("2024-01-15"),
@@ -78,8 +78,8 @@ export async function seedDatabase() {
                 termEnd: "2026-12-31"
             },
             budget: {
-                year: 2024,
-                category: "health" as const,
+                year: 2025,
+                category: "Health" as const,
                 status: "approved" as const,
                 amount: 200000,
                 remarks: "Health center renovation"
@@ -88,7 +88,7 @@ export async function seedDatabase() {
                 title: "Health Center Renovation",
                 description:
                     "Renovation and equipment upgrade for the barangay health center",
-                category: "health" as const,
+                category: "Health" as const,
                 budgetAllocated: 180000,
                 status: "planned" as const,
                 startDate: new Date("2024-03-01"),
@@ -124,8 +124,8 @@ export async function seedDatabase() {
                 termEnd: "2026-12-31"
             },
             budget: {
-                year: 2024,
-                category: "education" as const,
+                year: 2025,
+                category: "Education" as const,
                 status: "approved" as const,
                 amount: 150000,
                 remarks: "Youth education program"
@@ -133,7 +133,7 @@ export async function seedDatabase() {
             project: {
                 title: "Youth Skills Training Program",
                 description: "Vocational training for out-of-school youth",
-                category: "education" as const,
+                category: "Education" as const,
                 budgetAllocated: 120000,
                 status: "ongoing" as const,
                 startDate: new Date("2024-02-01"),
