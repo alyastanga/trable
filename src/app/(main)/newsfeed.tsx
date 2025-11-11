@@ -28,6 +28,7 @@ export default function NewsfeedScreen() {
             await db.delete(barangayProjects);
             await db.delete(officials);
             await db.delete(barangayBudgets);
+            await db.delete(barangayProjectImages);
             */
 
             await seedDatabase();
