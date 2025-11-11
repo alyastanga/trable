@@ -18,13 +18,32 @@ interface PostCardProps {
         barangayImage: string;
         comments?: any[];
         postImage?: string;
+        type: "announcement" | "project";
     };
 }
+
+const getTag = (type: "announcement" | "project") => {
+    if (type === "announcement") {
+        return {
+            text: "ANNOUNCEMENT",
+            style: styles.announcementTagContainer
+        };
+    }
+    if (type === "project") {
+        return {
+            text: "PROJECT PROGRESS",
+            style: styles.projectTagContainer
+        };
+    }
+    return null;
+};
 
 const PostCard = ({ item }: PostCardProps) => {
     const barangayPic = barangayImages[item.barangayName];
     const [liked, setLiked] = useState(false);
     const router = useRouter();
+
+    const postTag = getTag(item.type);
 
     function handleBarangayPress() {
         router.push(`/barangayPages/${item.barangayName}` as any);
@@ -74,6 +93,12 @@ const PostCard = ({ item }: PostCardProps) => {
                     <Text style={styles.content}>{item.content}</Text>
                 </View>
 
+                {postTag && (
+                    <View style={[styles.tagContainer, postTag.style]}>
+                        <Text style={styles.tagText}>{postTag.text}</Text>
+                    </View>
+                )}
+
                 <Pressable onPress={() => setLiked(!liked)}>
                     <FontAwesome
                         name={liked ? "heart" : "heart-o"}
@@ -110,6 +135,26 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 10,
         marginBottom: 10
+    },
+
+    tagContainer: {
+        alignSelf: "flex-start",
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 5,
+        marginBottom: 10
+    },
+    tagText: {
+        fontSize: 12,
+        fontFamily: "MontserratSemiBold",
+        color: "#ffffffff"
+    },
+    announcementTagContainer: {
+        backgroundColor: "#EF4444"
+    },
+
+    projectTagContainer: {
+        backgroundColor: "#10B981"
     },
 
     header: {

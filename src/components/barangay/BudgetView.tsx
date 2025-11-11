@@ -14,6 +14,15 @@ interface BudgetViewProps {
 }
 
 const BudgetView = ({ data }: BudgetViewProps) => {
+    const formatCurrency = (amount: number): string => {
+        return new Intl.NumberFormat("en-PH", {
+            style: "currency",
+            currency: "PHP",
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }).format(amount);
+    };
+
     const groupedData = data.reduce(
         (acc, item) => {
             const year = item.year.toString();
@@ -36,6 +45,13 @@ const BudgetView = ({ data }: BudgetViewProps) => {
     ]) => (
         <View key={year} style={styles.yearSection}>
             <Text style={styles.yearTitle}>Budget Allocation - {year}</Text>
+
+            <Text style={styles.totalBudget}>
+                Total Annual Budget:{" "}
+                <Text style={styles.totalBudgetAmount}>
+                    {formatCurrency(data.totalBudget)}
+                </Text>
+            </Text>
 
             <FlatList
                 data={data.items}
@@ -69,7 +85,7 @@ export default BudgetView;
 
 const styles = StyleSheet.create({
     container: {
-        padding: 15
+        //  padding: 15
     },
     yearSection: {
         marginBottom: 20,
@@ -91,6 +107,20 @@ const styles = StyleSheet.create({
         borderBottomColor: "#eee",
         paddingBottom: 5
     },
+
+    totalBudget: {
+        fontSize: 14,
+        fontFamily: "MontserratSemiBold",
+        color: "#4B5563",
+        marginBottom: 15
+    },
+    totalBudgetAmount: {
+        fontSize: 16,
+        fontFamily: "MontserratBold",
+        color: "#1D4ED8",
+        marginLeft: 5
+    },
+
     emptyText: {
         textAlign: "center",
         marginTop: 50,

@@ -29,8 +29,6 @@ const BudgetProgressBar = ({ item }: BudgetProgressBarProps) => {
             ? Math.round((allocatedAmount / totalAnnualBudget) * 100)
             : 0;
 
-    const filledWidth = `${percentage}%`;
-
     const getColor = (cat: string) => {
         switch (cat.toLowerCase()) {
             case "health":
@@ -54,7 +52,7 @@ const BudgetProgressBar = ({ item }: BudgetProgressBarProps) => {
             </View>
 
             <View style={styles.progressWrapper}>
-                <Progress size="lg" className="flex-1">
+                <Progress size="lg" className="flex-1" value={percentage}>
                     <ProgressFilledTrack className={getColor(category)} />
                 </Progress>
                 <Text style={styles.percentageText}>{percentage}%</Text>

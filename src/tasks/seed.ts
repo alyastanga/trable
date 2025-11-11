@@ -9,148 +9,203 @@ import {
     barangayBudgets
 } from "@/drizzle/schema";
 
-export async function seedDatabase() {
-    const existing = await db.select().from(users);
-    if (existing.length > 0) return;
+interface BudgetItem {
+    year: number;
+    category:
+        | "Infrastructure"
+        | "Health"
+        | "Education"
+        | "Peace and Order"
+        | "Livelihood";
+    status: "approved" | "pending";
+    amount: number;
+    remarks: string;
+}
 
-    const seedData = [
-        {
-            barangay: {
-                name: "Barangay San Isidro",
-                city: "Makati",
-                province: "Metro Manila",
-                displayImage: "SanIsidro.png"
-            },
-            user: {
-                displayName: "JuanD",
-                fullName: "Juan Dela Cruz",
-                role: "official" as const
-            },
-            official: {
-                position: "Barangay Captain",
-                termStart: "2023-01-01",
-                termEnd: "2026-12-31"
-            },
-            budget: {
+interface SeedDataItem {
+    barangay: any;
+    user: any;
+    official: any;
+    budgets: BudgetItem[];
+    project: any;
+    announcement: any;
+    projectImages: any[];
+}
+
+const newSeedData: SeedDataItem[] = [
+    {
+        barangay: {
+            name: "Barangay San Isidro",
+            city: "Makati",
+            province: "Metro Manila",
+            displayImage: "SanIsidro.png"
+        },
+        user: {
+            displayName: "JuanD",
+            fullName: "Juan Dela Cruz",
+            role: "official" as const
+        },
+        official: {
+            position: "Barangay Captain",
+            termStart: "2023-01-01",
+            termEnd: "2026-12-31"
+        },
+
+        budgets: [
+            {
                 year: 2025,
-                category: "infrastructure" as const,
-                status: "approved" as const,
-                amount: 500000,
-                remarks: "Budget for road improvement"
-            },
-            project: {
-                title: "Side Walk Rehabilitation Progress",
-                description:
-                    "On-going rehabilitation of the side walk along Barangay San Isidro.",
                 category: "Infrastructure" as const,
-                budgetAllocated: 450000,
-                status: "ongoing" as const,
-                startDate: new Date("2024-01-15"),
-                estimatedEndDate: new Date("2024-06-30")
+                status: "approved" as const,
+                amount: 500000, // Budget for Infrastructure
+                remarks: "General road improvement fund"
             },
-            announcement: {
-                title: "Community Cleanup",
-                content: "Join us this Saturday!"
-            },
-            projectImages: [
-                {
-                    url: "road-before.jpg",
-                    caption: "Road condition before rehabilitation"
-                },
-                { url: "road-progress.jpg", caption: "Current progress" }
-            ]
-        },
-        {
-            barangay: {
-                name: "Barangay San Jose",
-                city: "Rodriguez",
-                province: "Rizal",
-                displayImage: "SanJose.png"
-            },
-            user: {
-                displayName: "MariaS",
-                fullName: "Maria Santos",
-                role: "official" as const
-            },
-            official: {
-                position: "Kagawad",
-                termStart: "2023-01-01",
-                termEnd: "2026-12-31"
-            },
-            budget: {
+            {
                 year: 2025,
                 category: "Health" as const,
                 status: "approved" as const,
-                amount: 200000,
-                remarks: "Health center renovation"
-            },
-            project: {
-                title: "Health Center Renovation",
-                description:
-                    "Renovation and equipment upgrade for the barangay health center",
-                category: "Health" as const,
-                budgetAllocated: 180000,
-                status: "planned" as const,
-                startDate: new Date("2024-03-01"),
-                estimatedEndDate: new Date("2024-08-31")
-            },
-            announcement: {
-                title: "General Assembly!",
-                content:
-                    "Please attend the General Assembly this Friday at 6 PM in the Barangay Hall."
-            },
-            projectImages: [
-                {
-                    url: "health-center.jpg",
-                    caption: "Current health center building"
-                }
-            ]
+                amount: 300000, // Budget for Health
+                remarks: "COVID response and clinic supplies"
+            }
+        ],
+        project: {
+            title: "Side Walk Rehabilitation Progress",
+            description:
+                "On-going rehabilitation of the side walk along Barangay San Isidro.",
+            category: "Infrastructure" as const,
+            budgetAllocated: 450000, // COST of this specific project (fits within 500k)
+            status: "ongoing" as const,
+            startDate: new Date("2024-01-15"),
+            estimatedEndDate: new Date("2024-06-30")
         },
-        {
-            barangay: {
-                name: "Barangay 72",
-                city: "Caloocan City",
-                province: "Metro Manila",
-                displayImage: "SantaCruz.png"
+        announcement: {
+            title: "Community Cleanup",
+            content: "Join us this Saturday!"
+        },
+        projectImages: [
+            {
+                url: "road-before.jpg",
+                caption: "Road condition before rehabilitation"
             },
-            user: {
-                displayName: "PedroR",
-                fullName: "Pedro Reyes",
-                role: "official" as const
+            { url: "road-progress.jpg", caption: "Current progress" }
+        ]
+    },
+    // --- Barangay San Jose ---
+    {
+        barangay: {
+            name: "Barangay San Jose",
+            city: "Rodriguez",
+            province: "Rizal",
+            displayImage: "SanJose.png"
+        },
+        user: {
+            displayName: "MariaS",
+            fullName: "Maria Santos",
+            role: "official" as const
+        },
+        official: {
+            position: "Kagawad",
+            termStart: "2023-01-01",
+            termEnd: "2026-12-31"
+        },
+
+        budgets: [
+            {
+                year: 2025,
+                category: "Health" as const,
+                status: "approved" as const,
+                amount: 200000, // Budget for Health
+                remarks: "Health center renovation fund"
             },
-            official: {
-                position: "SK Chairman",
-                termStart: "2023-01-01",
-                termEnd: "2026-12-31"
-            },
-            budget: {
+            {
+                year: 2025,
+                category: "Livelihood" as const,
+                status: "approved" as const,
+                amount: 400000,
+                remarks: "Small business grants program"
+            }
+        ],
+        project: {
+            title: "Health Center Renovation",
+            description:
+                "Renovation and equipment upgrade for the barangay health center",
+            category: "Health" as const,
+            budgetAllocated: 180000,
+            status: "planned" as const,
+            startDate: new Date("2024-03-01"),
+            estimatedEndDate: new Date("2024-08-31")
+        },
+        announcement: {
+            title: "General Assembly!",
+            content:
+                "Please attend the General Assembly this Friday at 6 PM in the Barangay Hall."
+        },
+        projectImages: [
+            {
+                url: "health-center.jpg",
+                caption: "Current health center building"
+            }
+        ]
+    },
+
+    {
+        barangay: {
+            name: "Barangay 72",
+            city: "Caloocan City",
+            province: "Metro Manila",
+            displayImage: "SantaCruz.png"
+        },
+        user: {
+            displayName: "PedroR",
+            fullName: "Pedro Reyes",
+            role: "official" as const
+        },
+        official: {
+            position: "SK Chairman",
+            termStart: "2023-01-01",
+            termEnd: "2026-12-31"
+        },
+
+        budgets: [
+            {
                 year: 2025,
                 category: "Education" as const,
                 status: "approved" as const,
                 amount: 150000,
                 remarks: "Youth education program"
             },
-            project: {
-                title: "Youth Skills Training Program",
-                description: "Vocational training for out-of-school youth",
-                category: "Education" as const,
-                budgetAllocated: 120000,
-                status: "ongoing" as const,
-                startDate: new Date("2024-02-01"),
-                estimatedEndDate: new Date("2024-07-31")
-            },
-            announcement: {
-                title: "Free Skills Training!",
-                content:
-                    "Register now for our free vocational training program."
-            },
-            projectImages: [
-                { url: "training-center.jpg", caption: "Training facility" }
-            ]
-        }
-    ];
+            {
+                year: 2025,
+                category: "Sports" as const,
+                status: "approved" as const,
+                amount: 100000,
+                remarks: "Sports equipment and events"
+            }
+        ],
+        project: {
+            title: "Youth Skills Training Program",
+            description: "Vocational training for out-of-school youth",
+            category: "Education" as const,
+            budgetAllocated: 120000,
+            status: "ongoing" as const,
+            startDate: new Date("2024-02-01"),
+            estimatedEndDate: new Date("2024-07-31")
+        },
+        announcement: {
+            title: "Free Skills Training!",
+            content: "Register now for our free vocational training program."
+        },
+        projectImages: [
+            { url: "training-center.jpg", caption: "Training facility" }
+        ]
+    }
+];
 
-    for (const data of seedData) {
+export async function seedDatabase() {
+    const existing = await db.select().from(users);
+    if (existing.length > 0) return;
+
+    // Use the new seed data array
+    for (const data of newSeedData) {
         const [barangay] = await db
             .insert(barangays)
             .values(data.barangay)
@@ -177,26 +232,40 @@ export async function seedDatabase() {
             })
             .returning();
 
-        const [budget] = await db
-            .insert(barangayBudgets)
-            .values({
-                _barangayId: barangay._barangayId,
-                uploadedByOfficial: official._officialId,
-                postStatus: "published",
-                year: data.budget.year,
-                category: data.budget.category,
-                status: data.budget.status,
-                amount: data.budget.amount,
-                remarks: data.budget.remarks
-            })
-            .returning();
+        let primaryBudgetId = null;
+
+        for (const budgetItem of data.budgets) {
+            const [budget] = await db
+                .insert(barangayBudgets)
+                .values({
+                    _barangayId: barangay._barangayId,
+                    uploadedByOfficial: official._officialId,
+                    postStatus: "published",
+                    year: budgetItem.year,
+                    category: budgetItem.category,
+                    status: budgetItem.status,
+                    amount: budgetItem.amount,
+                    remarks: budgetItem.remarks
+                })
+                .returning();
+
+            if (budgetItem.category === data.project.category) {
+                primaryBudgetId = budget._barangayBudgetId;
+            }
+        }
+        if (!primaryBudgetId) {
+            console.error(
+                `ERROR: Could not find matching budget for project category: ${data.project.category} in ${barangay.name}`
+            );
+            continue;
+        }
 
         const [project] = await db
             .insert(barangayProjects)
             .values({
                 _barangayId: barangay._barangayId,
                 _officialId: official._officialId,
-                _budgetId: budget._barangayBudgetId,
+                _budgetId: primaryBudgetId,
                 postStatus: "published",
                 title: data.project.title,
                 description: data.project.description,
